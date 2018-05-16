@@ -20,8 +20,9 @@ void print_help(FILE *stream) {
 
 int main(int argc, char* argv[]) {
     int next_option;
+    extern char *optarg;
 
-    const char* const short_options = "oh";
+    const char* const short_options = "hi:";
 
     const struct option long_options[] = {
             {"output-preemption",    1, NULL, 'p'},
@@ -29,6 +30,7 @@ int main(int argc, char* argv[]) {
             {"op",                   1, NULL, 'p'},
             {"on",                   1, NULL, 'n'},
             {"help",                 0, NULL, 'h'},
+            {"input",                1, NULL, 'i'},
             {NULL,                   0, NULL, 0}
     };
 
@@ -43,11 +45,14 @@ int main(int argc, char* argv[]) {
                 case 'n':
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
+                case 'i':
+                    printf("ON. One day I'll now what this means: %s\n", optarg);
+                    break;
                 case 'h':
                 case '?':
                     print_help(stdout);
                     break;
-                case '-1':
+                case -1:
                     break;
                 default:
                     abort();

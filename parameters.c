@@ -15,6 +15,7 @@ void print_help(FILE *stream) {
             "  -on  --output-no-preemption filename  Set output file for non-preemptive scheduler.\n"
             "  -i   --input                          Set file containing tasks.\n");
     exit(0);
+
 }
 
 

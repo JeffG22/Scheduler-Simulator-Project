@@ -3,9 +3,8 @@
 #include <stdlib.h>
 #include <sysexits.h>
 #include <unistd.h>
-#include <errno.h>
 
-extern int errno;
+#include "listmaker.h"
 
 void print_help(FILE *stream, int EXIT_CODE) {
     fprintf(stream, "Simulator. Options:\n");
@@ -20,8 +19,6 @@ void print_help(FILE *stream, int EXIT_CODE) {
 int main(int argc, char* argv[]) {
 
     int next_option;
-    
-    FILE * input_file = NULL;
 
     const char* const short_options = "hi:";
 
@@ -46,13 +43,7 @@ int main(int argc, char* argv[]) {
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
                 case 'i':
-                    input_file = fopen(optarg, "r");
-                    if (input_file == NULL) {
-                        perror("It looks like there's a problem with your input file");
-                        exit(EX_OSFILE);
-                    } else {
-                        printf("The input file exists! That's a good starting point, I guess.\n");
-                    }
+                    read_input(optarg);
                     break;
                 case 'h':
                     print_help(stdout, EX_OK); //EX_OK equivale a 0

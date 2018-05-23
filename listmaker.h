@@ -44,6 +44,11 @@ int read_input(char * filename) {
     
     printf("The input file exists! That's a good starting point, I guess.\n");
 
-    
+    /*
+    *   idee per leggere il file
+    *   ciclo fino all'eof
+    *   interpreto t oppure i
+    *   chiamo aggiungi t oppure i
+    */
     return 0;
 }

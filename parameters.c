@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <sysexits.h>
 
 void print_help(FILE *stream, int EXIT_CODE) {
     fprintf(stream, "Simulator. Options:\n");

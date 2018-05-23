@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <sysexits.h>
+#include <unistd.h>
 
 void print_help(FILE *stream, int EXIT_CODE) {
     fprintf(stream, "Simulator. Options:\n");
@@ -20,7 +21,6 @@ void print_help(FILE *stream, int EXIT_CODE) {
 int main(int argc, char* argv[]) {
 
     int next_option;
-    //extern char *optarg; pensavo fosse necessario
 
     const char* const short_options = "hi:";
 
@@ -34,9 +34,13 @@ int main(int argc, char* argv[]) {
             {NULL,                   0, NULL, 0}
     };
 
+    // The name of the input file, puntatore a costante
+    const char* input_filename = NULL;
+
     if (argc != 1)
         while ((next_option = getopt_long_only(argc, argv, short_options, long_options, NULL)) != -1) { //verifica condizione con assegnamento
             switch (next_option) {
+                //per ogni file dovremo controllare che esista con access()
                 case 'p':
                     printf("OP. One day I'll now what this means: %s\n", optarg);
                     break;
@@ -44,7 +48,12 @@ int main(int argc, char* argv[]) {
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
                 case 'i':
-                    printf("ON. One day I'll now what this means: %s\n", optarg);
+                    input_filename = optarg;
+                    if (access(input_filename, R_OK) == 0) {
+                        printf("Input. One day I'll now what this means: %s\n", input_filename);
+                    } else {
+                        printf("It looks like there's a problem with your input file...");
+                    }
                     break;
                 case 'h':
                     print_help(stdout, EX_OK); //EX_OK equivale a 0

@@ -1,11 +1,11 @@
-//
-// Created by Fede on 16/05/2018.
-//
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
 #include <sysexits.h>
 #include <unistd.h>
+#include <errno.h>
+
+extern int errno;
 
 void print_help(FILE *stream, int EXIT_CODE) {
     fprintf(stream, "Simulator. Options:\n");
@@ -17,10 +17,11 @@ void print_help(FILE *stream, int EXIT_CODE) {
     exit(EXIT_CODE);
 }
 
-
 int main(int argc, char* argv[]) {
 
     int next_option;
+    
+    FILE * input_file = NULL;
 
     const char* const short_options = "hi:";
 
@@ -32,10 +33,7 @@ int main(int argc, char* argv[]) {
             {"help",                 0, NULL, 'h'},
             {"input",                1, NULL, 'i'},
             {NULL,                   0, NULL, 0}
-    };
-
-    // The name of the input file, puntatore a costante
-    const char* input_filename = NULL;
+    };    
 
     if (argc != 1)
         while ((next_option = getopt_long_only(argc, argv, short_options, long_options, NULL)) != -1) { //verifica condizione con assegnamento
@@ -48,11 +46,12 @@ int main(int argc, char* argv[]) {
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
                 case 'i':
-                    input_filename = optarg;
-                    if (access(input_filename, R_OK) == 0) {
-                        printf("Input. One day I'll now what this means: %s\n", input_filename);
+                    input_file = fopen(optarg, "r");
+                    if (input_file == NULL) {
+                        perror("It looks like there's a problem with your input file");
+                        exit(EX_OSFILE);
                     } else {
-                        printf("It looks like there's a problem with your input file...");
+                        printf("The input file exists! That's a good starting point, I guess.\n");
                     }
                     break;
                 case 'h':

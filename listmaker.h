@@ -10,17 +10,17 @@ extern int errno;
 typedef enum {NEW, READY, RUNNING, BLOCKED, EXIT} state_t;
 
 typedef struct instruction {
-    int type_flag;
-    int length;
+    unsigned int type_flag;
+    unsigned int length;
 
     struct instruction * next;
     struct instruction * previous;
 } instruction_t;
 
 typedef struct tcb {
-    int id;
-    int pc;
-    int arrival_time;
+    unsigned int id;
+    unsigned int pc;
+    unsigned int arrival_time;
     instruction_t * instr_list;
     state_t state;
 

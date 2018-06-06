@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sysexits.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "listmaker.h"
 
@@ -22,6 +23,8 @@ int main(int argc, char* argv[]) {
     task_list_t tasks;
     tasks.first = tasks.last = NULL;
     int next_option;
+    bool preemp, not_preemp, input;
+    preemp = not_preemp = input = false;
 
     const char* const short_options = "hi:";
 
@@ -41,12 +44,14 @@ int main(int argc, char* argv[]) {
                 //per ogni file dovremo controllare che esista con access()
                 case 'p':
                     printf("OP. One day I'll now what this means: %s\n", optarg);
+                    preemp = true;
                     break;
                 case 'n':
                     printf("ON. One day I'll now what this means: %s\n", optarg);
+                    not_preemp = true;
                     break;
                 case 'i':
-                    read_input(&tasks, optarg);
+                    input = read_input(&tasks, optarg);
                     break;
                 case 'h':
                     printf("caso h"); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
@@ -62,5 +67,7 @@ int main(int argc, char* argv[]) {
     else
         print_help(stderr, EX_USAGE); //il programma è stato avviato senza parametri.
 
+    // FORK HERE
+    
     return 0;
 }

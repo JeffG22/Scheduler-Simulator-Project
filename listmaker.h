@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <getopt.h>
-#include <stdlib.h>
-#include <sysexits.h>
-#include <unistd.h>
-#include <errno.h>
-
-//TO-DO: Find line where error occurred whule reading input
+//TO-DO: Find line where error occurred while reading input
 
 extern int errno;
 
@@ -112,7 +105,7 @@ void print_input(task_list_t * tasks) {
     printf("^~~top\n\n");*/
 }
 
-void read_input(task_list_t * tasks, char * filename) {
+bool read_input(task_list_t * tasks, char * filename) {
 
     if (freopen(filename, "r", stdin) == NULL) { //it associates the file input with the stdin
         perror("Looks like there's a problem with your input file");
@@ -127,14 +120,13 @@ void read_input(task_list_t * tasks, char * filename) {
     while (scanf("%c,%d,%d", &c_read, &n1, &n2) != EOF) {
 
         if (n1 < 0 || n2 < 0) {
-            fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected negative value).\n", filename, c_read);
+            fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected negative value).\n", filename);
             exit(EX_DATAERR);
         }        
         if (c_read == 't') 
             addTask(tasks, createTask(n1,n2));
         else if (c_read == 'i') {
             addInstruction(tasks, createIstruction(n1,n2));
-            printf("");
         }
         else {
             fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected character %c found).\n", filename, c_read);
@@ -149,5 +141,5 @@ void read_input(task_list_t * tasks, char * filename) {
     }
         
     fclose (stdin);
-    return 0;
+    return true;
 }

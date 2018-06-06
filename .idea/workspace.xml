@@ -12,10 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b870daa-c21c-473a-8e8e-98519d5a0732" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/listmaker.h" beforeDir="false" afterPath="$PROJECT_DIR$/listmaker.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parameters.c" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters.out" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.out" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +30,8 @@
       <file leaf-file-name="parameters.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parameters.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="134">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -40,8 +39,8 @@
       <file leaf-file-name="listmaker.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/listmaker.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="105" column="11" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
+            <state relative-caret-position="252">
+              <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -72,8 +71,8 @@
       <list>
         <option value="$PROJECT_DIR$/prova.txt" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/listmaker.h" />
         <option value="$PROJECT_DIR$/parameters.c" />
+        <option value="$PROJECT_DIR$/listmaker.h" />
       </list>
     </option>
   </component>
@@ -149,7 +148,7 @@
       <updated>1526463077366</updated>
       <workItem from="1526463078613" duration="3383000" />
       <workItem from="1527090075625" duration="452000" />
-      <workItem from="1528295076920" duration="1567000" />
+      <workItem from="1528295076920" duration="2327000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiornato con una nuova linea utilissima">
       <created>1526464020069</created>
@@ -183,7 +182,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5402000" />
+    <option name="totallyTimeSpent" value="6162000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -225,11 +224,11 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/listmaker.h</url>
-          <line>120</line>
-          <option name="timeStamp" value="1" />
+          <line>118</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="4" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -281,15 +280,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parameters.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="134">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/listmaker.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="105" column="11" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
+        <state relative-caret-position="252">
+          <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
         </state>
       </provider>
     </entry>

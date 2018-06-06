@@ -43,9 +43,10 @@ int main(int argc, char* argv[]) {
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
                 case 'i':
-                    read_input(optarg);
+                    read_input(optarg); //ritorna un int da interpretare eventualmente
                     break;
                 case 'h':
+                    printf("caso h"); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
                     print_help(stdout, EX_OK); //EX_OK equivale a 0
                     break;
                 case '?': /* getopt_long printed an error message. */

@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <errno.h>
 
+//TO-DO: Find line where error occurred whule reading input
+
 extern int errno;
 
 typedef enum {NEW, READY, RUNNING, BLOCKED, EXIT} state_t;
@@ -52,7 +54,7 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
     return new_task;
 }
 
-void addTask(task_t * new_task) {
+void addTask(task_list_t * tasks, task_t * new_task) {
     if(tasks->first == NULL)
         tasks->first = new_task;
     else {
@@ -69,14 +71,14 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
         perror("Error while creating a new instruction");
         exit(EX_OSERR);
     }
-
+    
     new_instr->type_flag = type_flag;
     new_instr->length = length;
     new_instr->next = new_instr->prev = NULL;
 
     return new_instr;
 }
-void addInstruction(instruction_t * new_instr) {
+void addInstruction(task_list_t * tasks, instruction_t * new_instr) {
      if(tasks->last->instr_list == NULL)
         tasks->last->instr_list = new_instr;
     else {
@@ -87,7 +89,30 @@ void addInstruction(instruction_t * new_instr) {
     return;
 }
 
-int read_input(char * filename) {
+void print_input(task_list_t * tasks) {
+    
+   /* printf("v~~top\n");
+    task_t tmp = tasks->first;
+    while (NULL != tmp) {
+        printf
+    }
+    
+    pNode tmp = p->first;
+    while (NULL != tmp) {
+        printf("%d: %s\n", ++i, tmp->desc);
+        tmp = tmp->next;
+    }
+    printf("---bottom\n");
+    i = 0;
+    tmp = p->last;
+    while (NULL != tmp) {
+        printf("%d: %s\n", ++i, tmp->desc);
+        tmp = tmp->prev;
+    }
+    printf("^~~top\n\n");*/
+}
+
+void read_input(task_list_t * tasks, char * filename) {
 
     if (freopen(filename, "r", stdin) == NULL) { //it associates the file input with the stdin
         perror("Looks like there's a problem with your input file");
@@ -99,16 +124,20 @@ int read_input(char * filename) {
     char c_read;
     unsigned int n1, n2;
     
-    while (scanf("%c,%u,%u", &c_read, &n1, &n2) != EOF) {
-        if(c_read == 't') 
-            addTask(createTask(n1,n2));
-        else if(c_read == 'i') {
-            addInstruction(createIstruction(n1,n2));
+    while (scanf("%c,%d,%d", &c_read, &n1, &n2) != EOF) {
+
+        if (n1 < 0 || n2 < 0) {
+            fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected negative value).\n", filename, c_read);
+            exit(EX_DATAERR);
+        }        
+        if (c_read == 't') 
+            addTask(tasks, createTask(n1,n2));
+        else if (c_read == 'i') {
+            addInstruction(tasks, createIstruction(n1,n2));
             printf("");
         }
-        else
-        {
-            fprintf(stderr, "Error: input file %s is incorrectly formatted.\n", filename);
+        else {
+            fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected character %c found).\n", filename, c_read);
             exit(EX_DATAERR);
         }
             

@@ -14,13 +14,13 @@ void print_help(FILE *stream, int EXIT_CODE) {
             "  -on  --output-no-preemption filename  Set output file for non-preemptive scheduler.\n"
             "  -i   --input                          Set file containing tasks.\n");
     exit(EXIT_CODE);
-}\
+}
 
-//Global var
-task_list_t * tasks;
 
 int main(int argc, char* argv[]) {
-
+    
+    task_list_t tasks;
+    tasks.first = tasks.last = NULL;
     int next_option;
 
     const char* const short_options = "hi:";
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
                     printf("ON. One day I'll now what this means: %s\n", optarg);
                     break;
                 case 'i':
-                    read_input(optarg); //ritorna un int da interpretare eventualmente
+                    read_input(&tasks, optarg);
                     break;
                 case 'h':
                     printf("caso h"); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo

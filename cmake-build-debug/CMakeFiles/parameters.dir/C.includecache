@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.h
+stdio.h
+-
+getopt.h
+-
+stdlib.h
+-
+sysexits.h
+-
+unistd.h
+-
+errno.h
+-
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/parameters.c
+stdio.h
+-
+getopt.h
+-
+stdlib.h
+-
+sysexits.h
+-
+unistd.h
+-
+listmaker.h
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.h
+

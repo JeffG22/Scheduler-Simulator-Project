@@ -14,7 +14,10 @@ void print_help(FILE *stream, int EXIT_CODE) {
             "  -on  --output-no-preemption filename  Set output file for non-preemptive scheduler.\n"
             "  -i   --input                          Set file containing tasks.\n");
     exit(EXIT_CODE);
-}
+}\
+
+//Global var
+task_list_t * tasks;
 
 int main(int argc, char* argv[]) {
 

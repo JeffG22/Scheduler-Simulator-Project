@@ -34,9 +34,6 @@ typedef struct task_list {
     task_t * last;
 } task_list_t;
 
-// TO-DO Move to main function
-
-
 task_t* createTask(unsigned int id, unsigned int arrival_time) {
     task_t* new_task = (task_t*) malloc(sizeof(task_t));
     if (new_task == NULL) {

@@ -1,5 +1,5 @@
 //TO-DO: Find line where error occurred while reading input
-
+//TO-DO: nel caso di memory leak sostiutiamo ad exit una funzione che termina liberando tutta la memoria (free)
 extern int errno;
 
 typedef enum {NEW, READY, RUNNING, BLOCKED, EXIT} state_t;
@@ -14,11 +14,12 @@ typedef struct instruction {
 
 typedef struct tcb {
     unsigned int id;
-    unsigned int pc;
     unsigned int arrival_time;
+    state_t state;
+    instruction_t * pc;
     instruction_t * instr_list;
     instruction_t * last;
-    state_t state;
+    
 
     struct tcb * next;
     struct tcb * prev;
@@ -38,7 +39,7 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
 
     new_task->id = id;
     new_task->arrival_time = arrival_time;
-    new_task->pc = 0;
+    new_task->pc = NULL;
     new_task->instr_list = NULL;
     new_task->last = NULL;
     new_task->state = NEW;
@@ -73,7 +74,7 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
 }
 void addInstruction(task_list_t * tasks, instruction_t * new_instr) {
      if(tasks->last->instr_list == NULL)
-        tasks->last->instr_list = new_instr;
+        tasks->last->instr_list = tasks->last->pc = new_instr;
     else {
         tasks->last->last->next = new_instr;
         new_instr->prev = tasks->last->last;
@@ -84,10 +85,29 @@ void addInstruction(task_list_t * tasks, instruction_t * new_instr) {
 
 void print_input(task_list_t * tasks) {
     
-   /* printf("v~~top\n");
-    task_t tmp = tasks->first;
-    while (NULL != tmp) {
-        printf
+    printf("v~~top\n");
+    
+    /*instruction_t * instr_list;
+    instruction_t * last;
+
+    
+    unsigned int type_flag;
+    unsigned int length;
+
+    struct instruction * next;
+    struct instruction * prev;*/
+    /*
+    task_t * t_tmp = tasks->first;
+    instruction_t * i_tmp = tasks->first->instr_list;
+    while (NULL != t_tmp) {
+        printf("task id: %u  pc: %u arrival: %u state: %u \n", t_tmp.id, t_tmp.pc, t_tmp.arrival_time, t_tmp.state);
+        printf("instruction\n");
+
+        while(NULL != i_tmp) {
+            printf("\ttype: %u length: %u", i_tmp.type_flag, i_tmp.length);
+        
+        }
+        t_tmp = t_tmp->next;
     }
     
     pNode tmp = p->first;
@@ -115,9 +135,9 @@ bool read_input(task_list_t * tasks, char * filename) {
     printf("The input file exists! That's a good starting point, I guess.\n");
 
     char c_read;
-    unsigned int n1, n2;
+    int n1, n2;
     
-    while (scanf("%c,%d,%d", &c_read, &n1, &n2) != EOF) {
+    while (scanf("%c,%d,%d\n", &c_read, &n1, &n2) != EOF) {
 
         if (n1 < 0 || n2 < 0) {
             fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected negative value).\n", filename);

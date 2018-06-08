@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="parameters" targetName="parameters" />
+      <config projectName="parameters" targetName="main" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -12,9 +12,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b870daa-c21c-473a-8e8e-98519d5a0732" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buggy.c" beforeDir="false" afterPath="$PROJECT_DIR$/buggy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parameters.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/parameters.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/parameters.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/listmaker.h" beforeDir="false" afterPath="$PROJECT_DIR$/listmaker.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters.c" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters.out" beforeDir="false" afterPath="$PROJECT_DIR$/parameters.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters.out" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,20 +41,20 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="parameters.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parameters.c">
+      <file leaf-file-name="listmaker.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/listmaker.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="12">
+              <caret line="126" column="37" lean-forward="true" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="listmaker.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/listmaker.h">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
+            <state relative-caret-position="540">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
             </state>
           </provider>
         </entry>
@@ -49,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -70,8 +84,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/prova.txt" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/parameters.c" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/listmaker.h" />
       </list>
     </option>
@@ -85,11 +100,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="565" />
-    <option name="y" value="-15" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+    <option name="x" value="-8" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -128,12 +143,12 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.parameters">
-    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="parameters" RUN_TARGET_NAME="parameters" EXPLICIT_BUILD_TARGET_NAME="all" />
-    <configuration name="parameters" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i gattosilvestro.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="parameters" TARGET_NAME="parameters" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="parameters" RUN_TARGET_NAME="parameters" />
+  <component name="RunManager" selected="Application.main">
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="parameters" RUN_TARGET_NAME="main" EXPLICIT_BUILD_TARGET_NAME="all" />
+    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i 01_tasks.csv" PASS_PARENT_ENVS_2="true" PROJECT_NAME="parameters" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="parameters" RUN_TARGET_NAME="main" />
     <list>
       <item itemvalue="Application.Build All" />
-      <item itemvalue="Application.parameters" />
+      <item itemvalue="Application.main" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -148,7 +163,8 @@
       <updated>1526463077366</updated>
       <workItem from="1526463078613" duration="3383000" />
       <workItem from="1527090075625" duration="452000" />
-      <workItem from="1528295076920" duration="2327000" />
+      <workItem from="1528295076920" duration="2380000" />
+      <workItem from="1528466083161" duration="1041000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiornato con una nuova linea utilissima">
       <created>1526464020069</created>
@@ -182,23 +198,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6162000" />
+    <option name="totallyTimeSpent" value="7256000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" weight="0.32905984" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32905984" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.32905984" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.33898306" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32905984" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32909605" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3988604" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -223,12 +238,12 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/listmaker.h</url>
-          <line>118</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>72</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="4" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -241,6 +256,27 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/parameters.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listmaker.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1830">
+          <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parameters.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -271,24 +307,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/prova.txt" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/parameters.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parameters.c">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="75">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/listmaker.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
+        <state relative-caret-position="12">
+          <caret line="126" column="37" lean-forward="true" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
         </state>
       </provider>
     </entry>

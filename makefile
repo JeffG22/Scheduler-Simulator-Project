@@ -1,7 +1,7 @@
 CFLAGS=-Wall -ggdb3 -pedantic
 CC=gcc
 
-all: parameters.out
+all: main.out
 
-parameters.out: parameters.c
+main.out: main.c
 	$(CC) $(CFLAGS) $< -o $@

@@ -80,7 +80,6 @@ void delete_node(pQueue p, char* desc)
     if (NULL != del-> prev)
         del->prev->next = del->next; //1 aggiorno il puntatore al successivo del nodo precedente
 
-                //problema di buffer overflow da cercare a causa delle free
     free(del->desc); //2 libero byte allocati per descrizione, vediamo che automaticamente il contenuto della stringa non rimane scritto nel heap
     del->next = NULL; //3 per sicurezza cancello indirizzi che rimarrebbero scritti nell'heap
     del->prev = NULL; //3
@@ -94,7 +93,10 @@ pNode create_node(char* desc)
     if (new_node == NULL) exit(-1); //4 controllo su malloc
     new_node->desc = (char*) malloc(sizeof(char)*DESC_SIZE);
     if (new_node->desc == NULL) exit(-1); //4 controllo su malloc
-    strcpy(new_node->desc, desc);
+    
+    strncpy(new_node->desc, desc, sizeof(char) * DESC_SIZE ); //5 istruzione di copia di grandezza definita (overflow safe)
+    //strcpy(new_node->desc, desc);
+
     return new_node;
 }
 

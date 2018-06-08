@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named parameters
+# Target rules for targets named main
 
 # Build rule for target.
-parameters: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 parameters
-.PHONY : parameters
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-parameters/fast:
-	$(MAKE) -f CMakeFiles/parameters.dir/build.make CMakeFiles/parameters.dir/build
-.PHONY : parameters/fast
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
-parameters.o: parameters.c.o
+main.o: main.c.o
 
-.PHONY : parameters.o
+.PHONY : main.o
 
 # target to build an object file
-parameters.c.o:
-	$(MAKE) -f CMakeFiles/parameters.dir/build.make CMakeFiles/parameters.dir/parameters.c.o
-.PHONY : parameters.c.o
+main.c.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.o
+.PHONY : main.c.o
 
-parameters.i: parameters.c.i
+main.i: main.c.i
 
-.PHONY : parameters.i
+.PHONY : main.i
 
 # target to preprocess a source file
-parameters.c.i:
-	$(MAKE) -f CMakeFiles/parameters.dir/build.make CMakeFiles/parameters.dir/parameters.c.i
-.PHONY : parameters.c.i
+main.c.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.i
+.PHONY : main.c.i
 
-parameters.s: parameters.c.s
+main.s: main.c.s
 
-.PHONY : parameters.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-parameters.c.s:
-	$(MAKE) -f CMakeFiles/parameters.dir/build.make CMakeFiles/parameters.dir/parameters.c.s
-.PHONY : parameters.c.s
+main.c.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.s
+.PHONY : main.c.s
 
 # Help Target
 help:
@@ -157,11 +157,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... parameters"
+	@echo "... main"
 	@echo "... edit_cache"
-	@echo "... parameters.o"
-	@echo "... parameters.i"
-	@echo "... parameters.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

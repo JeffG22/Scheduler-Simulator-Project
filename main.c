@@ -91,23 +91,25 @@ int main(int argc, char* argv[]) {
                 perror("Error on fork not_preemp");
                 exit(EX_OSERR);
             }
-            
+
             if (not_preemp_pid == 0) { //Sono il figlio not_preemp
                 //not_preemptive(output_not_preemp);
             }
             else {
+                               
                 if (waitpid(preemp_pid, &preemp_status, 0) == -1) {
                     perror("Error on preemptive process");
                     exit(EX_OSERR);
                 }
                 else {
-                    if(WIFEXITED(preemp_status)) {
+                    if(WIFEXITED(preemp_status)) { //according to http://man7.org/linux/man-pages/man2/waitpid.2.html
                         printf("The child process exited normally with exit code %d.\n", WEXITSTATUS(preemp_status));
                     }
-                    else {
+                    else if (WIFSIGNALED(preemp_status)) {
                         printf("The child process exited abnormally with signal %d.\n", WTERMSIG(preemp_status));
                     }
                 }
+
                 if(waitpid(not_preemp_pid, &not_preemp_status, 0) == -1) {
                     perror("Error on non preemptive process");
                     exit(EX_OSERR);
@@ -116,7 +118,7 @@ int main(int argc, char* argv[]) {
                     if(WIFEXITED(not_preemp_status)) {
                         printf("The child process exited normally with exit code %d.\n", WEXITSTATUS(not_preemp_status));
                     }
-                    else {
+                    else if (WIFSIGNALED(not_preemp_status)) {
                         printf("The child process exited abnormally with signal %d.\n", WTERMSIG(not_preemp_status));
                     }
                 }

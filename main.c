@@ -75,14 +75,24 @@ int main(int argc, char* argv[]) {
 
         pid_t preemp_pid = fork();
 
-        if(preemp_pid == 0) { //Sono il figlio preemp
-            //preemptive(output_preemp);
-        } 
-        else {
+        if (preemp_pid < 0) { //controllo su fork
+            perror("Error on fork preemp");
+            exit(EX_OSERR);
+        }
+
+        if(preemp_pid == 0) {//Sono il figlio preemp
+            //preemptive(output_preemp); 
+        }
+        else { //Sono il genitore
 
             pid_t not_preemp_pid = fork(); //qui forka anche il primo figlio
-
-            if(not_preemp_pid == 0) { //Sono il figlio not_preemp
+            
+            if (not_preemp_pid < 0) { //controllo su fork
+                perror("Error on fork not_preemp");
+                exit(EX_OSERR);
+            }
+            
+            if (not_preemp_pid == 0) { //Sono il figlio not_preemp
                 //not_preemptive(output_not_preemp);
             }
             else {

@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
                     input = read_input(&tasks, optarg);
                     break;
                 case 'h':
-                    printf("caso h"); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
+                    printf("%d\n%s\n", optopt, optarg); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
                     print_help(stdout, EX_OK); //EX_OK equivale a 0
                     break;
                 case '?': /* getopt_long printed an error message. */

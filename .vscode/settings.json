@@ -1,2 +1,8 @@
 {
+    "files.associations": {
+        "stdbool.h": "c",
+        "sysexits.h": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c"
+    }
 }

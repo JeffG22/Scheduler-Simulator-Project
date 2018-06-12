@@ -6,11 +6,12 @@
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
 #include "listmaker.h"
+#include "not_preemptive.h"
+//#include "preemptive.h"
 
 void print_help(FILE *stream, int EXIT_CODE) {
-    fprintf(stream, "Simulator. Options:\n");
+    fprintf(stream, "Scheduler simulator. Options:\n");
     fprintf(stream,
             "  -h   --help                           Display this help message.\n"
             "  -op  --output-preemption filename     Set output file for preemptive scheduler.\n"
@@ -19,11 +20,12 @@ void print_help(FILE *stream, int EXIT_CODE) {
     exit(EXIT_CODE);
 }
 
-
 int main(int argc, char* argv[]) {
     
-    task_list_t tasks;
-    tasks.first = tasks.last = NULL;
+    task_list_t task_lists[N_STATES];
+    for (int i = 0; i < N_STATES; i++)
+        task_lists[i].first = task_lists[i].last = NULL;
+    
     int next_option;
     bool input;
     char *output_preemp, *output_not_preemp;
@@ -55,7 +57,8 @@ int main(int argc, char* argv[]) {
                     output_not_preemp = optarg;
                     break;
                 case 'i':
-                    input = read_input(&tasks, optarg);
+                    input = read_input(&task_lists[NEW], optarg);
+                    not_preemptive(task_lists, NULL);
                     break;
                 case 'h':
                     printf("%d\n%s\n", optopt, optarg); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
@@ -93,7 +96,7 @@ int main(int argc, char* argv[]) {
             }
 
             if (not_preemp_pid == 0) { //Sono il figlio not_preemp
-                //not_preemptive(output_not_preemp);
+                not_preemptive(task_lists, output_not_preemp);
             }
             else {
                                
@@ -126,7 +129,8 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    /*per tutti sia processo padre che figli
+    /*
+    per tutti sia processo padre che figli
     <libera la memoria allocata con malloc>
     */
     return 0;

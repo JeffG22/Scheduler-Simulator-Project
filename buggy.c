@@ -81,7 +81,7 @@ void delete_node(pQueue p, char* desc)
         del->prev->next = del->next; //1 aggiorno il puntatore al successivo del nodo precedente
 
     free(del->desc); //2 libero byte allocati per descrizione, vediamo che automaticamente il contenuto della stringa non rimane scritto nel heap
-    del->next = NULL; //3 per sicurezza cancello indirizzi che rimarrebbero scritti nell'heap
+    del->next = NULL; //3 per sicurezza cancello dati che rimarrebbero scritti nell'heap
     del->prev = NULL; //3
     free(del);
 }

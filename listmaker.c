@@ -50,7 +50,8 @@ task_t * removeTask(task_list_t * tasks, task_t * del) {
     return del;
 }
 
-void moveTask(task_list_t * source, task_list_t * dest, task_t * t) {
+void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core) {
+    //TO-DO correzione per diversificare casi
     addTask_bottom(dest, removeTask(source, t));
 }
 

@@ -48,6 +48,11 @@ typedef struct task_list {
     task_t * last;
 } task_list_t;
 
+typedef struct thread_args {
+    task_list_t * task_lists;
+    char * outputname;
+} thread_args_t;
+
 task_t* createTask(unsigned int id, unsigned int arrival_time);
 
 void addTask_bottom(task_list_t * tasks, task_t * new_task);
@@ -61,7 +66,7 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length);
 
 void addInstruction(task_list_t * tasks, instruction_t * new_instr);
 
-print_input(task_list_t * tasks, char *c, int print_instr);
+void print_input(task_list_t * tasks, char *c, int print_instr);
 
 bool read_input(task_list_t * tasks, char * filename);
 

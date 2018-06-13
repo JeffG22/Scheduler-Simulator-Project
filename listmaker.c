@@ -90,7 +90,7 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
         
         i_tmp = t_tmp->instr_list;
 
-        if (true) {
+        if (print_instr) {
             printf("instruction top\n");
             while(NULL != i_tmp) { //ciclo che scorre instr dalla testa
                 printf("\ttype: %u length: %u\n", i_tmp->type_flag, i_tmp->length);

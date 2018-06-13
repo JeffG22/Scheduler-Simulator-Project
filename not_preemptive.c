@@ -11,6 +11,7 @@ void * run_not_preemp(void * args) {
 
     printf("%p\n", task_lists);
 
+    /*prova per vedere il branch su cui pusha*/
     return NULL;
 }
 

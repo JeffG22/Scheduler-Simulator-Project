@@ -19,6 +19,13 @@
 
     //nb queste scelte sono quelle che mi sono venute in mente, ovviamente arbitrarie, quindi parliamone :)
 
+    nuovo: penso che
+    - sia da cambiare l'estrazione dei processi da blocked e da new facendo sì che quando la coda di ready è vuota
+    prenda tutti quelli possibili da blocked e da new
+    - dobbiamo aggiungere un criterio di priorità come ad esempio la lunghezza della prossima istruzione (0 per quelle di i/o)
+    - bisogna verificare se si possono fare tutti gli spostamenti nello stesso ciclo di ck o se non va bene
+    - se vogliamo mettere il min heap dobbiamo utilizzare al posto di prev e next figlio dx e figlio sx
+
 */
 
 #include "not_preemptive.h"

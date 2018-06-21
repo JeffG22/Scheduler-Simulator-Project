@@ -4,7 +4,14 @@ Se serve cominciamo a scrivere qui quello che metteremo nel report! :D
 
 i file eseguibili li mettiamo con estensione .out
 
-Cose del forum da ricordare
+* Algoritmo not preemptive: SPN
+* Algoritmo preemptive: SRT
+
+**TO-DO**
+
+* 
+
+**_Cose del forum da ricordare_**
 
 Q: Supponiamo che un task abbia un'istruzione bloccante come ultima istruzione. Una volta aspettato che si sblocchi, possiamo direttamente mandarlo in "exit"?
 A: No, bisogna loggare e scrivere sul file output che il task, seppur terminato, deve prima passare allo stato "ready" e allo stato "running"

@@ -32,6 +32,8 @@ void addTask_bottom(task_list_t * tasks, task_t * new_task) {
     }
     new_task->next = NULL;
     tasks->last = new_task;
+    new_task->service_time = 0;
+    new_task->wait_time = 0;
     
     return;
 }
@@ -51,8 +53,10 @@ task_t * removeTask(task_list_t * tasks, task_t * del) {
 }
 
 void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core) {
+    
     //TO-DO correzione per diversificare casi
     addTask_bottom(dest, removeTask(source, t));
+    //log(fw_np, core, ck, run_task->id, "ready");
 }
 
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
@@ -69,14 +73,18 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
     return new_instr;
 }
 
-void addInstruction(task_list_t * tasks, instruction_t * new_instr) {
-     if(tasks->last->instr_list == NULL)
-        tasks->last->instr_list = tasks->last->pc = new_instr;
+void addInstruction(task_t * task, instruction_t * new_instr) {
+    if(task->instr_list == NULL)
+        task->instr_list = task->pc = new_instr;
     else {
-        tasks->last->last->next = new_instr;
-        new_instr->prev = tasks->last->last;
+        task->last->next = new_instr;
+        new_instr->prev = task->last;
     }
-    tasks->last->last = new_instr;
+    task->last = new_instr;
+    
+    //incremento service_time
+    if (new_instr->type_flag == 0)
+        task->service_time += new_instr->length;
     return;
 }
 
@@ -141,7 +149,7 @@ bool read_input(task_list_t * tasks, char * filename) {
         if (c_read == 't') 
             addTask_bottom(tasks, createTask(n1,n2));
         else if (c_read == 'i') {
-            addInstruction(tasks, createIstruction(n1,n2));
+            addInstruction(tasks->last, createIstruction(n1,n2));
         }
         else {
             fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected character %c found).\n", filename, c_read);

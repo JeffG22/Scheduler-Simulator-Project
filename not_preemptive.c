@@ -49,14 +49,14 @@ void * run_not_preemp(void * args) {
 
 
     //variabili del thread
-    bool scheduler = true;
+    bool scheduler = true;  //false quando non ha più niente da fare
     long long unsigned ck = 0; //clock
     unsigned int waitck = 0; //tempo di attesa del clock per schedulare prossimo task
     task_t * run_task = NULL; //punto al task che porterò in running
     task_t * blocked_task = NULL; //punto al primo task blocked
     task_t * new_task = NULL; //punto al primo task new
 
-    while (scheduler) { //finchè c'è almeno un processo in ready oppure new oppure blocked
+    while (scheduler) { //finché c'è almeno un processo in ready oppure new oppure blocked
 
         pthread_mutex_lock(&mutex);
 
@@ -65,23 +65,26 @@ void * run_not_preemp(void * args) {
             scheduler = false;
             return NULL;
         }
-
+        
         run_task = task_lists[READY].first;
 
         if (NULL == run_task) { //se in ready non c'è nessuno
 
             if (core == CORE0 && task_lists[BLOCKED].first != NULL && task_lists[BLOCKED].first->core == CORE0)
                 blocked_task = task_lists[BLOCKED].first;
-            else if (core == CORE1 && task_lists[BLOCKED].first != NULL && task_lists[BLOCKED].first->core == CORE1)
+            else if (core == CORE1 && task_lists[BLOCKED].last != NULL && task_lists[BLOCKED].last->core == CORE1)
                 blocked_task = task_lists[BLOCKED].last;
             else
                 blocked_task = NULL;
 
             new_task = task_lists[NEW].first;
 
-            if ( new_task == NULL || (blocked_task != NULL && 
-                    (blocked_task->wait_time < ck) ||
-                    (new_task->arrival_time > ck && blocked_task->wait_time <= new_task->arrival_time))) { 
+            if ( new_task == NULL || 
+                    ( blocked_task != NULL && 
+                        (blocked_task->wait_time < ck ||
+                        (new_task->arrival_time > ck && blocked_task->wait_time <= new_task->arrival_time))
+                    )  
+                ) { 
                 //schedulo questo da blocked
                 if (blocked_task->wait_time > ck)
                         waitck = blocked_task->wait_time - ck;
@@ -91,7 +94,7 @@ void * run_not_preemp(void * args) {
                     moveTask(&task_lists[BLOCKED], BLOCKED, &task_lists[READY], READY, run_task, core);
                 }
             } else {
-                //schedulo questo da reay
+                //schedulo questo da ready
                 if (new_task->arrival_time > ck)
                     waitck = new_task->arrival_time - ck;
                 else {
@@ -102,11 +105,11 @@ void * run_not_preemp(void * args) {
             }
         }
 
-        if (waitck == 0) {
+        if (waitck == 0) { //c'è almeno un task da poter eseguire
             log(fw_np, core, ck, run_task->id, "running");
             moveTask(&task_lists[READY], READY, &task_lists[RUNNING], RUNNING, run_task, core);
         }
-
+        
         pthread_mutex_unlock(&mutex);
 
         if (waitck > 0) {

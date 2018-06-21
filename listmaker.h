@@ -28,7 +28,7 @@ typedef enum {CORE0 = 0,
             } core_t;
 
 typedef struct instruction {
-    unsigned int type_flag;
+    unsigned int type_flag; //1 = bloccante, 0 = non bloccante
     unsigned int length;
 
     struct instruction * next;
@@ -38,9 +38,10 @@ typedef struct instruction {
 typedef struct tcb {
     unsigned int id;
     unsigned int arrival_time;
+    unsigned int service_time;
     state_t state;
     core_t core;
-    unsigned int wait_time;
+    unsigned int wait_time; //ck attuale + tempo d'attesa randomico
     instruction_t * pc;
     instruction_t * instr_list;
     instruction_t * last;
@@ -71,7 +72,7 @@ void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, st
 
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length);
 
-void addInstruction(task_list_t * tasks, instruction_t * new_instr);
+void addInstruction(task_t * tasks, instruction_t * new_instr);
 
 void print_input(task_list_t * tasks, char *c, int print_instr);
 

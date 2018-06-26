@@ -66,11 +66,9 @@ void * run_not_preemp(void * args) {
         
         log(fw_np, core, ck, run_task->id, "running");
         moveTask(&task_list[READY], READY, &task_list[RUNNING], RUNNING, run_task, core);
-        ck += 
-        
+                
         pthread_mutex_unlock(&mutex);
 
-        
         while(NULL != run_task->pc || run_task->pc->type_flag != 1) {
             ck += run_task->pc->length; //esecuzione atomica dell'istruzione
             run_task->pc = run_task->pc->next;
@@ -87,7 +85,7 @@ void * run_not_preemp(void * args) {
             log(fw_np, core, ck, run_task->id, "blocked");
             moveTask(&task_list[RUNNING], RUNNING, &task_list[BLOCKED], BLOCKED, run_task, core);
         }
-        
+
         pthread_mutex_unlock(&mutex);
     }
     

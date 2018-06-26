@@ -22,11 +22,6 @@ I file eseguibili li mettiamo con estensione .out
 
 ## Domande/dubbi
 
-* bisogna verificare se si possono fare tutti gli spostamenti nello stesso ciclo di ck o se non va bene
-* se vogliamo mettere il min heap dobbiamo utilizzare al posto di prev e next figlio dx e figlio sx
-* corner case: un processo ha come ultima istruzione un'istruzione bloccante, controllare com'è gestito
-* in un singolo ciclo di ck uno stato può passare in running e andare direttamente in blocked, prima di prendere il prossimo processo è meglio aumentare di uno il ck
-
 ## Log delle cose fatte su firstbranch
 
 * Apertura fw_np in processo

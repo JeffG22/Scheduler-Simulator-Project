@@ -1,33 +1,3 @@
-/*
-    log delle cose fatte
-    1) apertura del file in processo e passaggio di puntatore a file
-    2) variabili utili del thread per scheduling
-    2.1) definito l'enum core_t
-    3) aggiunto in task_t il campo core e wait_time per indicare da quale processo è stato bloccato e per quanto tempo
-    4) modificata la funzione moveTask aggiungendo da quale coda a quale altra viene spostato
-    5) nello scheduling not_preemptive ho fatto la scelta della coda da cui prendere il task nel mutex
-    6) fatto avanzamento di task, manca la funzione random
-    6.1)fatto caso in cui manchino dei colpi di ck per prossimo task con waitck
-    6.2) dopo esecuzione il task è mandato in blocked o exit
-    7) funzione log per stampare transizioni
-    
-    rimane da fare:
-    - inserimento ordinato in blocked dalla testa per core0 -> movetask riceve anche il core
-    - stessa cosa per core1 dalla coda
-    - trovare heap min in c, adattarlo al programma facendo test fuori e inserirlo
-    - controllare i punti dal 1 al 7 del log ahahahahha :'-)
-
-    //nb queste scelte sono quelle che mi sono venute in mente, ovviamente arbitrarie, quindi parliamone :)
-
-    nuovo: penso che
-    - sia da cambiare l'estrazione dei processi da blocked e da new facendo sì che quando la coda di ready è vuota
-    prenda tutti quelli possibili da blocked e da new
-    - dobbiamo aggiungere un criterio di priorità come ad esempio la lunghezza della prossima istruzione (0 per quelle di i/o)
-    - bisogna verificare se si possono fare tutti gli spostamenti nello stesso ciclo di ck o se non va bene
-    - se vogliamo mettere il min heap dobbiamo utilizzare al posto di prev e next figlio dx e figlio sx
-
-*/
-
 #include "not_preemptive.h"
 
 pthread_mutex_t mutex;
@@ -158,9 +128,11 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
     print_input(&task_lists[1], "READY", 0);
     printf("%p\n", task_lists);*/
     
+    //variabili per i due thread
     pthread_t core0_id, core1_id;
     pthread_attr_t attrdefault;
 
+    //incapsuliamo gli argomenti da passare al thread in una struct
     thread_args_t args;
     args.fw_np = fw_np;
     args.task_lists = task_lists;
@@ -171,35 +143,35 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
         exit(EX_OSERR);
     }
 
-    if (pthread_attr_init(&attrdefault) != 0) { //inizializza a default
+    if (pthread_attr_init(&attrdefault) != 0) { //inizializza a default gli attributi del thread
         perror("error on set thread attributes");
         exit(EX_OSERR);
     }
 
-    if (pthread_create(&core0_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) {
+    if (pthread_create(&core0_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) { //CREAZIONE CORE0
         perror("error on pthread create for core0");
         exit(EX_OSERR);
     }
 
     args.core = CORE1;
-    if (pthread_create(&core1_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) {
+    if (pthread_create(&core1_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) { //CREAZIONE CORE1
         perror("error on pthread create for core1");
         exit(EX_OSERR);
     }
 
-    if (&attrdefault != NULL) {
+    if (&attrdefault != NULL) { //distruzione attributi thread utilizzati
         if (pthread_attr_destroy(&attrdefault) != 0) {
             perror("error on pthread_attr_destroy");
-        exit(EX_OSERR);
+            exit(EX_OSERR);
         }
     }
 
-    if (pthread_join (core0_id, NULL) != 0) {
+    if (pthread_join (core0_id, NULL) != 0) { //attesa core0
         perror("error on pthread_join");
         exit(EX_OSERR);
     }
 
-    if (pthread_join (core1_id, NULL) != 0) {
+    if (pthread_join (core1_id, NULL) != 0) { //attesa core1
         perror("error on pthread_join");
         exit(EX_OSERR);
     }
@@ -207,6 +179,11 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
     if (pthread_mutex_destroy (&mutex) != 0) { //per distruggerlo deve essere unlockato se no c'è errore
         perror("error on mutex_init");
         exit(EX_OSERR);
+    }
+
+    if (fclose(fw_np) != 0) { //chiusura file
+        perror("problem to close the file for scheduler not_preemp");
+        exit(EX_OSFILE);
     }
 
     return;

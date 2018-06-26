@@ -9,15 +9,34 @@ I file eseguibili li mettiamo con estensione .out
 
 ## TO-DO
 
-* Inserimenti ed estrazioni da coda READY
-* Inserimenti coda BLOCKED (in coda/in testa)
+* Inserimenti ed estrazioni da coda READY (heap o inserimenti ordinati)
+* Inserimenti coda BLOCKED (in coda/in testa) -> moveTask riceve anche il core
 * Estrazione coda BLOCKED (coda/testa)
-* Prossimo processo (scheduling: messa in RUNNING, controllo altre code)
+* Prossimo processo (scheduling: messa in RUNNING, controllo altre code -> estrarre quelli pronti)
 * Esecuzione istruzioni (incremento clock)
 * Mettere in BLOCKED/EXIT
 * Gestione fine programma (liberare memoria, restituire controllo, chiusura file)
 * Mutex
 * Fine task
+
+## Domande/dubbi
+
+* bisogna verificare se si possono fare tutti gli spostamenti nello stesso ciclo di ck o se non va bene
+* se vogliamo mettere il min heap dobbiamo utilizzare al posto di prev e next figlio dx e figlio sx
+* corner case: un processo ha come ultima istruzione un'istruzione bloccante, controllare com'è gestito
+* in un singolo ciclo di ck uno stato può passare in running e andare direttamente in blocked, prima di prendere il
+prossimo processo è meglio aumentare di uno il ck
+
+## Log delle cose fatte su firstbranch
+    
+* Apertura fw_np in processo
+* Passaggio struct a thread e dichiarazione di alcune variabili utili al thread per scheduling
+* enum core_t, in task_t il campo core e wait_time per indicare da quale processo è stato bloccato e per quanto tempo
+* modificata la funzione moveTask aggiungendo da quale coda a quale altra viene spostato
+* utilizzo mutex nella funzione del thread
+* avanzamento di task, manca la funzione random per attesa
+* dopo esecuzione il task è mandato in blocked o exit
+* funzione log per stampare transizioni
 
 ## _Cose del forum da ricordare_
 

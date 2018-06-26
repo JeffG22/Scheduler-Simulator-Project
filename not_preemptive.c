@@ -13,71 +13,56 @@ void log(FILE *fw_np, core_t core, long long unsigned int ck, unsigned int task_
 void * run_not_preemp(void * args) {
     
     //cast dei parametri
-    task_list_t * task_lists = ((thread_args_t *)args)->task_lists;
+    task_list_t * task_list = ((thread_args_t *)args)->task_lists;
     FILE * fw_np = ((thread_args_t *)args)->fw_np;
     core_t core = ((thread_args_t *)args)->core;
 
 
     //variabili del thread
-    bool scheduler = true;  //false quando non ha più niente da fare
     long long unsigned ck = 0; //clock
     unsigned int waitck = 0; //tempo di attesa del clock per schedulare prossimo task
+    task_t ** blocked_task = NULL; //punto al primo task blocked
     task_t * run_task = NULL; //punto al task che porterò in running
-    task_t * blocked_task = NULL; //punto al primo task blocked
-    task_t * new_task = NULL; //punto al primo task new
 
-    while (scheduler) { //finché c'è almeno un processo in ready oppure new oppure blocked
+    while (true) { //finché c'è almeno un processo in ready oppure new oppure blocked
 
         pthread_mutex_lock(&mutex);
 
-        if (task_lists[NEW].first == NULL && task_lists[READY].first == NULL && task_lists[BLOCKED].first == NULL){
+        // check on remaining tasks
+        if (task_list[NEW].first == NULL && task_list[READY].first == NULL && task_list[BLOCKED].first == NULL){
             printf("ho finito i task %llu\n", ck);
-            scheduler = false;
             return NULL;
         }
-        
-        run_task = task_lists[READY].first;
-
-        if (NULL == run_task) { //se in ready non c'è nessuno
-
-            if (core == CORE0 && task_lists[BLOCKED].first != NULL && task_lists[BLOCKED].first->core == CORE0)
-                blocked_task = task_lists[BLOCKED].first;
-            else if (core == CORE1 && task_lists[BLOCKED].last != NULL && task_lists[BLOCKED].last->core == CORE1)
-                blocked_task = task_lists[BLOCKED].last;
-            else
-                blocked_task = NULL;
-
-            new_task = task_lists[NEW].first;
-
-            if ( new_task == NULL || 
-                    ( blocked_task != NULL && 
-                        (blocked_task->wait_time < ck ||
-                        (new_task->arrival_time > ck && blocked_task->wait_time <= new_task->arrival_time))
-                    )  
-                ) { 
-                //schedulo questo da blocked
-                if (blocked_task->wait_time > ck)
-                        waitck = blocked_task->wait_time - ck;
-                else {
-                    run_task = blocked_task;
-                    log(fw_np, core, ck, run_task->id, "ready"); //from blocked to ready
-                    moveTask(&task_lists[BLOCKED], BLOCKED, &task_lists[READY], READY, run_task, core);
-                }
-            } else {
-                //schedulo questo da ready
-                if (new_task->arrival_time > ck)
-                    waitck = new_task->arrival_time - ck;
-                else {
-                    run_task = new_task;
-                    log(fw_np, core, ck, run_task->id, "ready"); //from new to ready
-                    moveTask(&task_lists[NEW], NEW, &task_lists[READY], READY, run_task, core);
-                }
-            }
+        // check on arrived tasks
+        while (task_list[NEW].first != NULL && task_list[NEW].first->arrival_time <= ck) {
+            log(fw_np, core, ck, task_list[NEW].first->id, "ready"); //from new to ready
+            moveTask(&task_list[NEW], NEW, &task_list[READY], READY, task_list[NEW].first, core);
         }
+        // check on unblocked task
+        if (core == CORE0)
+            blocked_task = &(task_list[BLOCKED].first);
+        else
+            blocked_task = &(task_list[BLOCKED].last);
+
+        while (blocked_task != NULL && (*blocked_task)->core == core && (*blocked_task)->wait_time < ck) {
+            log(fw_np, core, ck, (*blocked_task)->id, "ready"); //from blocked to ready
+            moveTask(&task_list[BLOCKED], BLOCKED, &task_list[READY], READY, (*blocked_task), core);
+        }
+
+
+        /* cose di prima che forse sono utili dopo
+        run_task = task_list[READY].first;
+        (new_task->arrival_time > ck && (*blocked_task)->wait_time <= new_task->arrival_time) 
+        (blocked_task->wait_time > ck)
+        waitck = blocked_task->wait_time - ck;
+        (new_task->arrival_time > ck)
+        waitck = new_task->arrival_time - ck;
+        run_task = new_task;*/
+
 
         if (waitck == 0) { //c'è almeno un task da poter eseguire
             log(fw_np, core, ck, run_task->id, "running");
-            moveTask(&task_lists[READY], READY, &task_lists[RUNNING], RUNNING, run_task, core);
+            moveTask(&task_list[READY], READY, &task_list[RUNNING], RUNNING, run_task, core);
         }
         
         pthread_mutex_unlock(&mutex);
@@ -94,19 +79,19 @@ void * run_not_preemp(void * args) {
             pthread_mutex_lock(&mutex);
             if (run_task->pc == NULL) { //task concluso!
                 log(fw_np, core, ck, run_task->id, "exit");
-                moveTask(&task_lists[RUNNING], RUNNING, &task_lists[EXIT], EXIT, run_task, core);
+                moveTask(&task_list[RUNNING], RUNNING, &task_list[EXIT], EXIT, run_task, core);
             } else { //istruzione bloccante
                 run_task->core = core;
                 //run_task->wait_time = ck + numerorandom(run_task->pc->length); //TO-DO
                 run_task->pc = run_task->pc->next;
                 log(fw_np, core, ck, run_task->id, "blocked");
-                moveTask(&task_lists[RUNNING], RUNNING, &task_lists[BLOCKED], BLOCKED, run_task, core);
+                moveTask(&task_list[RUNNING], RUNNING, &task_list[BLOCKED], BLOCKED, run_task, core);
             }
             pthread_mutex_unlock(&mutex);
         }
     }
     
-    printf("%p\n", task_lists);
+    fprintf(stderr, "Error on thread execution");
     return NULL;
 }
 

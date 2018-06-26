@@ -20,9 +20,9 @@ void * run_not_preemp(void * args) {
 
     //variabili del thread
     long long unsigned ck = 0; //clock
-    unsigned int waitck = 0; //tempo di attesa del clock per schedulare prossimo task
     task_t ** blocked_task = NULL; //punto al primo task blocked
     task_t * run_task = NULL; //punto al task che porterò in running
+    srand(time(NULL)); //generazione seme per sequenza numeri casuali    
 
     while (true) { //finché c'è almeno un processo in ready oppure new oppure blocked
 
@@ -49,46 +49,46 @@ void * run_not_preemp(void * args) {
             moveTask(&task_list[BLOCKED], BLOCKED, &task_list[READY], READY, (*blocked_task), core);
         }
 
-
-        /* cose di prima che forse sono utili dopo
+        /* cerco il primo task da eseguire
+            1) ho un task che posso portare in esecuzione -> eseguo
+            2) non ho un task che posso portare in esecuzione -> aspetto ed incremeneto ck
+        */
+        
         run_task = task_list[READY].first;
-        (new_task->arrival_time > ck && (*blocked_task)->wait_time <= new_task->arrival_time) 
-        (blocked_task->wait_time > ck)
-        waitck = blocked_task->wait_time - ck;
-        (new_task->arrival_time > ck)
-        waitck = new_task->arrival_time - ck;
-        run_task = new_task;*/
-
-
-        if (waitck == 0) { //c'è almeno un task da poter eseguire
-            log(fw_np, core, ck, run_task->id, "running");
-            moveTask(&task_list[READY], READY, &task_list[RUNNING], RUNNING, run_task, core);
+                
+        while (run_task != NULL && run_task->arrival_time > ck) {
+            run_task = run_task->next;
         }
+        if (run_task == NULL) {
+            ck++;
+            continue;
+        }
+        
+        log(fw_np, core, ck, run_task->id, "running");
+        moveTask(&task_list[READY], READY, &task_list[RUNNING], RUNNING, run_task, core);
+        ck += 
         
         pthread_mutex_unlock(&mutex);
 
-        if (waitck > 0) {
-            ck += waitck;
-            waitck = 0;
-        } else {
-            while(NULL != run_task->pc || run_task->pc->type_flag != 1) {
-                ck += run_task->pc->length;
-                run_task->pc = run_task->pc->next;
-            }
-
-            pthread_mutex_lock(&mutex);
-            if (run_task->pc == NULL) { //task concluso!
-                log(fw_np, core, ck, run_task->id, "exit");
-                moveTask(&task_list[RUNNING], RUNNING, &task_list[EXIT], EXIT, run_task, core);
-            } else { //istruzione bloccante
-                run_task->core = core;
-                //run_task->wait_time = ck + numerorandom(run_task->pc->length); //TO-DO
-                run_task->pc = run_task->pc->next;
-                log(fw_np, core, ck, run_task->id, "blocked");
-                moveTask(&task_list[RUNNING], RUNNING, &task_list[BLOCKED], BLOCKED, run_task, core);
-            }
-            pthread_mutex_unlock(&mutex);
+        
+        while(NULL != run_task->pc || run_task->pc->type_flag != 1) {
+            ck += run_task->pc->length; //esecuzione atomica dell'istruzione
+            run_task->pc = run_task->pc->next;
         }
+
+        pthread_mutex_lock(&mutex);
+        if (run_task->pc == NULL) { //task concluso!
+            log(fw_np, core, ck, run_task->id, "exit");
+            moveTask(&task_list[RUNNING], RUNNING, &task_list[EXIT], EXIT, run_task, core);
+        } else { //istruzione bloccante
+            run_task->core = core;
+            run_task->wait_time = ck + rand() % (run_task->pc->length) + 1;
+            run_task->pc = run_task->pc->next;
+            log(fw_np, core, ck, run_task->id, "blocked");
+            moveTask(&task_list[RUNNING], RUNNING, &task_list[BLOCKED], BLOCKED, run_task, core);
+        }
+        
+        pthread_mutex_unlock(&mutex);
     }
     
     fprintf(stderr, "Error on thread execution");

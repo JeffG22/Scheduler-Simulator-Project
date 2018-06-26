@@ -57,7 +57,9 @@ task_t* createTask(unsigned int id, unsigned int arrival_time);
 
 void addTask_bottom(task_list_t * tasks, task_t * new_task);
 
-//lista da cui lo togliamo (first e last), puntatore all'elemento da togliere
+void print_input(task_list_t * tasks, char *c, int print_instr);
+
+//togliamo (first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del);
 
 void moveTask(task_list_t * source, task_list_t * dest, task_t * t);
@@ -65,8 +67,6 @@ void moveTask(task_list_t * source, task_list_t * dest, task_t * t);
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length);
 
 void addInstruction(task_list_t * tasks, instruction_t * new_instr);
-
-void print_input(task_list_t * tasks, char *c, int print_instr);
 
 bool read_input(task_list_t * tasks, char * filename);
 

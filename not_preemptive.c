@@ -9,7 +9,18 @@ void * run_not_preemp(void * args) {
     task_lists = ((thread_args_t *)args)->task_lists;
     outputname = ((thread_args_t *)args)->outputname;
 
+    pthread_mutex_lock(&mutex);
+
     printf("%p\n", task_lists);
+
+    task_t ** blocked_task = &task_lists[NEW].first;
+    printf("%p, %p\n", blocked_task, *blocked_task);
+    printf("Should be: %p\n", task_lists[NEW].first);
+    task_lists[NEW].first = task_lists[NEW].last;
+    printf("%p, %p\n", blocked_task, *blocked_task);
+    printf("Should be: %p\n\n", task_lists[NEW].first);
+
+    pthread_mutex_unlock(&mutex);
 
     return NULL;
 }

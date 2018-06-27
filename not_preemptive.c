@@ -51,7 +51,7 @@ void * run_not_preemp(void * args) {
 
         /* cerco il primo task da eseguire
             1) ho un task che posso portare in esecuzione -> eseguo
-            2) non ho un task che posso portare in esecuzione -> aspetto ed incremeneto ck
+            2) non ho un task che posso portare in esecuzione -> aspetto ed incremento ck
         */
         
         run_task = task_list[READY].first;

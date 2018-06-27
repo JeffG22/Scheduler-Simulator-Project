@@ -42,7 +42,7 @@ typedef struct tcb {
     unsigned int arrival_time;
     unsigned int service_time;
     state_t state;
-    core_t core;
+    core_t core; //core che l'ha bloccato
     unsigned int wait_time; //ck attuale + tempo d'attesa randomico
     instruction_t * pc;
     instruction_t * instr_list;
@@ -66,6 +66,10 @@ typedef struct thread_args {
 task_t* createTask(unsigned int id, unsigned int arrival_time);
 
 void addTask_bottom(task_list_t * tasks, task_t * new_task);
+
+void addTask_sortedList(task_list_t * tasks, task_t * new_task);
+
+void addBlockedTask(task_list_t * tasks, task_t * new_task);
 
 //lista da cui lo togliamo (first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del);

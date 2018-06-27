@@ -12,6 +12,8 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
 
     new_task->id = id;
     new_task->arrival_time = arrival_time;
+    new_task->service_time = 0;
+    new_task->wait_time = 0;
     new_task->pc = NULL;
     new_task->instr_list = NULL;
     new_task->last = NULL;
@@ -31,14 +33,78 @@ void addTask_bottom(task_list_t * tasks, task_t * new_task) {
         new_task->prev = tasks->last;
     }
     new_task->next = NULL;
-    tasks->last = new_task;
-    new_task->service_time = 0;
-    new_task->wait_time = 0;
+    tasks->last = new_task;   
     
     return;
 }
 
-//lista da cui lo togliamo (first e last), puntatore all'elemento da togliere
+void addTask_sortedList(task_list_t * tasks, task_t * new_task) {
+    unsigned int serv_time = new_task->service_time;
+    task_t * p = tasks->first;
+    while (p != NULL && p->service_time <= serv_time) {
+        p = p->next;
+    }
+    if (p == NULL) 
+        addTask_bottom(tasks, new_task);
+    else {
+        new_task->prev = p->prev;
+        if (p->prev != NULL)
+            p->prev->next = new_task;
+        else
+            tasks->first = new_task;
+        new_task->next = p;
+        p->prev = new_task;
+    }
+    return;
+}
+
+void addBlockedTask(task_list_t * tasks, task_t * new_task) {
+    unsigned int wait_time = new_task->wait_time;
+    core_t core = new_task->core;
+    task_t * p;
+    if (core == CORE0) {
+        p = tasks->first;
+        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+            p = p->next;
+        if (p == NULL)
+            addTask_bottom(tasks, new_task);
+        else {
+            new_task->prev = p->prev;
+            if (p->prev != NULL)
+                p->prev->next = new_task;
+            else
+                tasks->first = new_task;
+            new_task->next = p;
+            p->prev = new_task;
+        }
+    }
+    else {
+        p = tasks->last;
+        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+            p = p->prev;
+        if (p == NULL) { //sono la testa oppure la lista è vuota
+            if (tasks->first == NULL)
+                tasks->last = new_task;
+            else
+                tasks->first->prev = new_task;
+            new_task->next = tasks->first;
+            tasks->first = new_task;
+            new_task->prev = NULL;
+        }
+        else {
+            new_task->next = p->next;
+            if (p->next != NULL)
+                p->next->prev = new_task;
+            else
+                tasks->last = new_task;
+            new_task->prev = p;
+            p->next = new_task;
+        }                                                        
+    }             
+}
+
+
+//lista da cui lo togliamo (puntatore a first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del) {
     if (NULL == del) return NULL;
     if (del == tasks->first)
@@ -54,9 +120,21 @@ task_t * removeTask(task_list_t * tasks, task_t * del) {
 
 void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core) {
     
-    //TO-DO correzione per diversificare casi
-    addTask_bottom(dest, removeTask(source, t));
-    //log(fw_np, core, ck, run_task->id, "ready");
+    /* la cancellazione avviene in tutte le liste in ugual modo invocando removeTask
+    * l'inserimento avviene per:
+    * NEW,RUNNING,EXIT in coda
+    * READY in modo ordinato secondo la priorità del processo
+    * BLOCKED in modo ordinato secondo il tempo di atteso partendo dalla testa per core0 e dalla coda per core1
+    */
+
+    if (state_dest == NEW || state_dest == RUNNING || state_dest == EXIT)
+        addTask_bottom(dest, removeTask(source, t));
+    else if (state_dest == READY)
+        addTask_sortedList(dest, removeTask(source, t));
+    else //state_dest == BLOCKED
+        addBlockedTask(dest, removeTask(source, t));
+
+    return;
 }
 
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {

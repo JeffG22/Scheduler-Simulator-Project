@@ -1,3 +1,9 @@
+# Per la prox volta
+* aggiorniamo il read me sapendo che dobbiamo
+* portare in firstbranch i miglioramenti fatti su listmaker.c
+* migliorare movetask perchè non serve il puntatore all'elemento corrente
+* fix del bug sulla lista blocked (praticamente inserisce dopo al posto che prima)
+
 # Scheduler-Simulator-Project
 
 A project for the exam of Operating Systems.

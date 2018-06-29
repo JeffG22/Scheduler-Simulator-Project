@@ -12,6 +12,9 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
 
     new_task->id = id;
     new_task->arrival_time = arrival_time;
+    new_task->service_time = 0;
+    new_task->wait_time = 0;
+    new_task->core = 0;
     new_task->pc = NULL;
     new_task->instr_list = NULL;
     new_task->last = NULL;
@@ -31,12 +34,78 @@ void addTask_bottom(task_list_t * tasks, task_t * new_task) {
         new_task->prev = tasks->last;
     }
     new_task->next = NULL;
-    tasks->last = new_task;
+    tasks->last = new_task;   
     
     return;
 }
 
-//lista da cui lo togliamo (first e last), puntatore all'elemento da togliere
+void addTask_sortedList(task_list_t * tasks, task_t * new_task) {
+    unsigned int serv_time = new_task->service_time;
+    task_t * p = tasks->first;
+    while (p != NULL && p->service_time <= serv_time) {
+        p = p->next;
+    }
+    if (p == NULL) 
+        addTask_bottom(tasks, new_task);
+    else {
+        new_task->prev = p->prev;
+        if (p->prev != NULL)
+            p->prev->next = new_task;
+        else
+            tasks->first = new_task;
+        new_task->next = p;
+        p->prev = new_task;
+    }
+    return;
+}
+
+void addBlockedTask(task_list_t * tasks, task_t * new_task) {
+    unsigned int wait_time = new_task->wait_time;
+    core_t core = new_task->core;
+    task_t * p;
+    if (core == CORE0) {
+        p = tasks->first;
+        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+            p = p->next;
+        if (p == NULL)
+            addTask_bottom(tasks, new_task);
+        else {
+            new_task->prev = p->prev;
+            if (p->prev != NULL)
+                p->prev->next = new_task;
+            else
+                tasks->first = new_task;
+            new_task->next = p;
+            p->prev = new_task;
+        }
+    }
+    else {
+        p = tasks->last;
+        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+            p = p->prev;
+        if (p == NULL) { //sono la testa oppure la lista è vuota
+            if (tasks->first == NULL)
+                tasks->last = new_task;
+            else
+                tasks->first->prev = new_task;
+            new_task->next = tasks->first;
+            tasks->first = new_task;
+            new_task->prev = NULL;
+        }
+        else { //BUG: vedi il caso in cui ho unico elemento del core0 (che è testa e coda) e metto elemento core2
+            new_task->next = p->next;
+            if (p->next != NULL)
+                p->next->prev = new_task;
+            else
+                tasks->last = new_task;
+            new_task->prev = p;
+            p->next = new_task;
+        }                                                        
+    }             
+}
+
+
+//lista da cui lo togliamo (puntatore a first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del) {
     if (NULL == del) return NULL;
     if (del == tasks->first)
@@ -50,8 +119,26 @@ task_t * removeTask(task_list_t * tasks, task_t * del) {
     return del;
 }
 
-void moveTask(task_list_t * source, task_list_t * dest, task_t * t) {
-    addTask_bottom(dest, removeTask(source, t));
+void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest, task_t * t) {
+    task_list_t * source = &task_lists[state_source];
+    task_list_t * dest = &task_lists[state_dest];
+
+    /* la cancellazione avviene in tutte le liste in ugual modo invocando removeTask
+    * l'inserimento avviene per:
+    * NEW,RUNNING,EXIT in coda
+    * READY in modo ordinato secondo la priorità del processo
+    * BLOCKED in modo ordinato secondo il tempo di atteso partendo dalla testa per core0 e dalla coda per core1
+    */
+   
+    printf("%u from %d to %d\n", t->id, state_source, state_dest); //stampo id e numero delle liste from e to
+    if (state_dest == NEW || state_dest == RUNNING || state_dest == EXIT)
+        addTask_bottom(dest, removeTask(source, t));
+    else if (state_dest == READY)
+        addTask_sortedList(dest, removeTask(source, t));
+    else //state_dest == BLOCKED
+        addBlockedTask(dest, removeTask(source, t));
+
+    return;
 }
 
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
@@ -68,14 +155,18 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
     return new_instr;
 }
 
-void addInstruction(task_list_t * tasks, instruction_t * new_instr) {
-     if(tasks->last->instr_list == NULL)
-        tasks->last->instr_list = tasks->last->pc = new_instr;
+void addInstruction(task_t * task, instruction_t * new_instr) {
+    if(task->instr_list == NULL)
+        task->instr_list = task->pc = new_instr;
     else {
-        tasks->last->last->next = new_instr;
-        new_instr->prev = tasks->last->last;
+        task->last->next = new_instr;
+        new_instr->prev = task->last;
     }
-    tasks->last->last = new_instr;
+    task->last = new_instr;
+    
+    //incremento service_time
+    if (new_instr->type_flag == 0)
+        task->service_time += new_instr->length;
     return;
 }
 
@@ -86,7 +177,7 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     task_t * t_tmp = tasks->first;
     instruction_t * i_tmp;
     while (NULL != t_tmp) { //ciclo che scorre i task dalla testa
-        printf("task id: %u  pc: %p arrival: %u state: %u \n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state);
+        printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
         
         i_tmp = t_tmp->instr_list;
 
@@ -109,11 +200,11 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     }
     
     //nel percorrerla all'indietro non testiamo nuovamente le liste delle istruzioni
-    printf("\n\n\n---bottom\n");
+    printf("\n---bottom\n");
     t_tmp = tasks->last;
 
     while (NULL != t_tmp) { //ciclo che scorre i task dalla coda
-        printf("task id: %u  pc: %p arrival: %u state: %u \n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state);
+        printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
         t_tmp = t_tmp->prev;
     }
     printf("\n\n");
@@ -140,7 +231,7 @@ bool read_input(task_list_t * tasks, char * filename) {
         if (c_read == 't') 
             addTask_bottom(tasks, createTask(n1,n2));
         else if (c_read == 'i') {
-            addInstruction(tasks, createIstruction(n1,n2));
+            addInstruction(tasks->last, createIstruction(n1,n2));
         }
         else {
             fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected character %c found).\n", filename, c_read);

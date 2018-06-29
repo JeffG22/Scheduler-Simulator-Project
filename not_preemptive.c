@@ -1,7 +1,7 @@
 #include "not_preemptive.h"
 
 pthread_mutex_t mutex;
-
+/*
 void * run_not_preemp(void * args) {
     task_list_t * task_lists;
     char * outputname;
@@ -13,7 +13,6 @@ void * run_not_preemp(void * args) {
 
     printf("%p\n", task_lists);
 
-    task_t ** blocked_task = &task_lists[NEW].first;
     printf("%p, %p\n", blocked_task, *blocked_task);
     printf("Should be: %p\n", task_lists[NEW].first);
     task_lists[NEW].first = task_lists[NEW].last;
@@ -23,20 +22,44 @@ void * run_not_preemp(void * args) {
     pthread_mutex_unlock(&mutex);
 
     return NULL;
-}
+}*/
 
 void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione chiamata dal main
+    //void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core);
+    state_t s;
     
-    print_input(&task_lists[0], "NEW", 0);
+    print_input(&task_lists[NEW], "NEW" , 0);
+    //print_input(&task_lists[READY], "READY" , 0);
+    //print_input(&task_lists[BLOCKED], "BLOCKED" , 0);
+    //print_input(&task_lists[RUNNING], "RUNNING" , 0);
+    //print_input(&task_lists[EXIT], "EXIT" , 0);
 
-    moveTask(&task_lists[0], &task_lists[1], task_lists[0].first->next); //spostiamo il secondo task in ready
-    moveTask(&task_lists[0], &task_lists[1], task_lists[0].last); 
-
-    print_input(&task_lists[0], "NEW", 0);
-    print_input(&task_lists[1], "READY", 0);
-
-    printf("%p\n", task_lists);
+    moveTask(task_lists, NEW, READY, task_lists[NEW].first);
+    moveTask(task_lists, NEW, READY, task_lists[NEW].last);
+    moveTask(task_lists, NEW, READY, task_lists[NEW].first);
+    moveTask(task_lists, NEW, READY, task_lists[NEW].first);
     
+    print_input(&task_lists[NEW], "NEW" , 0);
+    print_input(&task_lists[READY], "READY" , 0);
+
+    moveTask(task_lists, READY, RUNNING, task_lists[READY].first);
+
+    task_lists[RUNNING].first->core = 0;
+    moveTask(task_lists, RUNNING, BLOCKED, task_lists[RUNNING].first);
+    task_lists[READY].first->core = 1;
+    moveTask(task_lists, READY, BLOCKED, task_lists[READY].first);
+    print_input(&task_lists[BLOCKED], "BLOCKED" , 0);
+    moveTask(task_lists, BLOCKED, READY, task_lists[BLOCKED].first);
+    
+    moveTask(task_lists, READY, EXIT, task_lists[READY].first);
+    moveTask(task_lists, READY, BLOCKED, task_lists[READY].first);
+    
+    print_input(&task_lists[NEW], "NEW" , 0);
+    print_input(&task_lists[READY], "READY" , 0);
+    print_input(&task_lists[BLOCKED], "BLOCKED" , 0);
+    print_input(&task_lists[RUNNING], "RUNNING" , 0);
+    print_input(&task_lists[EXIT], "EXIT" , 0);
+/*    
     pthread_t core0_id, core1_id;
     pthread_attr_t attrdefault;
     thread_args_t args;
@@ -84,6 +107,6 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
         perror("error on mutex_init");
         exit(EX_OSERR);
     }
-
+*/
     return;
 }

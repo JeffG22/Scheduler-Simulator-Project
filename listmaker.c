@@ -65,7 +65,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     task_t * p;
     if (core == CORE0) {
         p = tasks->first;
-        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+        while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->next;
         if (p == NULL)
             addTask_bottom(tasks, new_task);
@@ -81,7 +81,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     }
     else {
         p = tasks->last;
-        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+        while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->prev;
         if (p == NULL) { //sono la testa oppure la lista è vuota
             if (tasks->first == NULL)
@@ -92,7 +92,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
             tasks->first = new_task;
             new_task->prev = NULL;
         }
-        else { //BUG: vedi il caso in cui ho unico elemento del core0 (che è testa e coda) e metto elemento core2
+        else {
             new_task->next = p->next;
             if (p->next != NULL)
                 p->next->prev = new_task;

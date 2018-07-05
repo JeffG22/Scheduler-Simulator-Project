@@ -2,17 +2,10 @@
 
 CFLAGS=-Wall -ggdb3 -pedantic
 CC=gcc
+LDFLAGS=-lpthread
+SOURCES = main.c not_preemptive.c listmaker.c
+OBJECTS = $(SOURCES:.c=.out)
+TARGET = main
 
-all: listmaker main.out
-
-main.out: main.c
-	$(CC) $(CFLAGS) $< -o $@
-
-listmaker: listmaker.c
-	$(CC) $(CFLAGS) $<
-
-preemptive: preemptive.c
-	$(CC) $(CFLAGS) $<
-
-not_preemptive: not_preemptive.c
-	$(CC) $(CFLAGS) $<
+$(TARGET) : $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)

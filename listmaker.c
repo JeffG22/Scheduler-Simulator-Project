@@ -1,7 +1,7 @@
 #include "listmaker.h"
 
-//TO-DO: Find line where error occurred while reading input
-//TO-DO: nel caso di memory leak sostiutiamo ad exit una funzione che termina liberando tutta la memoria (free)
+//TO-DO: in read_input, trovare e stampare la riga a cui è avvenuto l'errore
+//TO-DO: nel caso di memory leak sostituiamo ad exit una funzione che termina liberando tutta la memoria (free)
 
 task_t* createTask(unsigned int id, unsigned int arrival_time) {
     task_t* new_task = (task_t*) malloc(sizeof(task_t));
@@ -208,17 +208,15 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
 
 bool read_input(task_list_t * tasks, char * filename) {
 
-    if (freopen(filename, "r", stdin) == NULL) { //it associates the file input with the stdin
+    if (freopen(filename, "r", stdin) == NULL) { //Associa il file di input con stdin
         perror("Looks like there's a problem with your input file");
         exit(EX_OSFILE);
     }
     
-    printf("The input file exists! That's a good starting point, I guess.\n");
-
     char c_read;
     int n1, n2;
     
-    while (scanf("%c,%d,%d\n", &c_read, &n1, &n2) != EOF) {
+    while (scanf("%c,%d,%d\n", &c_read, &n1, &n2) != EOF) { //Legge il file riga per riga
 
         if (n1 < 0 || n2 < 0) {
             fprintf(stderr, "Error: input file %s is incorrectly formatted (unexpected negative value).\n", filename);

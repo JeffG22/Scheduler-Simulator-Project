@@ -22,15 +22,14 @@ void print_help(FILE *stream, int EXIT_CODE) {
 
 int main(int argc, char* argv[]) {
     
-    task_list_t task_lists[N_STATES];
-    for (int i = 0; i < N_STATES; i++)
+    task_list_t task_lists[N_STATES];   //Array di liste di task
+    for (int i = 0; i < N_STATES; i++)  
         task_lists[i].first = task_lists[i].last = NULL;
     
     int next_option;
-    bool input;
     char *output_preemp, *output_not_preemp;
     output_preemp = output_not_preemp = NULL;
-    int preemp_status, not_preemp_status;
+    int preemp_status, not_preemp_status;   //Contengono informazioni di stato per le waitpid()
 
     const char* const short_options = "hi:";
 
@@ -57,7 +56,7 @@ int main(int argc, char* argv[]) {
                     output_not_preemp = optarg;
                     break;
                 case 'i':
-                    input = read_input(&task_lists[NEW], optarg);
+                    read_input(&task_lists[NEW], optarg);
                     not_preemptive(task_lists, NULL);
                     break;
                 case 'h':
@@ -72,7 +71,7 @@ int main(int argc, char* argv[]) {
             }
         }
     else
-        print_help(stderr, EX_USAGE); //il programma è stato avviato senza parametri.
+        print_help(stderr, EX_USAGE); //Il programma è stato avviato senza parametri.
 
     if(output_preemp != NULL && output_not_preemp != NULL) {
 
@@ -106,10 +105,10 @@ int main(int argc, char* argv[]) {
                 }
                 else {
                     if(WIFEXITED(preemp_status)) { //according to http://man7.org/linux/man-pages/man2/waitpid.2.html
-                        printf("The child process exited normally with exit code %d.\n", WEXITSTATUS(preemp_status));
+                        printf("The preemptive processor exited normally with exit code %d.\n", WEXITSTATUS(preemp_status));
                     }
                     else if (WIFSIGNALED(preemp_status)) {
-                        printf("The child process exited abnormally with signal %d.\n", WTERMSIG(preemp_status));
+                        printf("The preemptive processor exited abnormally with signal %d.\n", WTERMSIG(preemp_status));
                     }
                 }
 
@@ -119,10 +118,10 @@ int main(int argc, char* argv[]) {
                 }
                 else {
                     if(WIFEXITED(not_preemp_status)) {
-                        printf("The child process exited normally with exit code %d.\n", WEXITSTATUS(not_preemp_status));
+                        printf("The not preemptive processor exited normally with exit code %d.\n", WEXITSTATUS(not_preemp_status));
                     }
                     else if (WIFSIGNALED(not_preemp_status)) {
-                        printf("The child process exited abnormally with signal %d.\n", WTERMSIG(not_preemp_status));
+                        printf("The not preemptive processor exited abnormally with signal %d.\n", WTERMSIG(not_preemp_status));
                     }
                 }
             }

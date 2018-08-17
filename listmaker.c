@@ -14,6 +14,7 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
     new_task->arrival_time = arrival_time;
     new_task->service_time = 0;
     new_task->wait_time = 0;
+    new_task->core = -1; //non è di nessun core
     new_task->pc = NULL;
     new_task->instr_list = NULL;
     new_task->last = NULL;
@@ -62,9 +63,13 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     unsigned int wait_time = new_task->wait_time;
     core_t core = new_task->core;
     task_t * p;
+    if (core == -1) {
+        fprintf(stderr, "Internal error: core not set");
+        exit(EX_SOFTWARE);
+    }
     if (core == CORE0) {
         p = tasks->first;
-        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+        while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->next;
         if (p == NULL)
             addTask_bottom(tasks, new_task);
@@ -80,7 +85,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     }
     else {
         p = tasks->last;
-        while (p != NULL && p->core != core && p->wait_time <= wait_time)
+        while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->prev;
         if (p == NULL) { //sono la testa oppure la lista è vuota
             if (tasks->first == NULL)
@@ -118,21 +123,28 @@ task_t * removeTask(task_list_t * tasks, task_t * del) {
     return del;
 }
 
-void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core) {
-    
-    /* la cancellazione avviene in tutte le liste in ugual modo invocando removeTask
+void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest, task_t * t) {
+    task_list_t * source = &task_lists[state_source];
+    task_list_t * dest = &task_lists[state_dest];
+    /* la cancellazione avviene in tutte le liste in modo uguale invocando removeTask
     * l'inserimento avviene per:
     * NEW,RUNNING,EXIT in coda
     * READY in modo ordinato secondo la priorità del processo
     * BLOCKED in modo ordinato secondo il tempo di atteso partendo dalla testa per core0 e dalla coda per core1
     */
 
+   //printf("%u from %d to %d\n", t->id, state_source, state_dest); //stampo id e numero delle liste from e to
+   
     if (state_dest == NEW || state_dest == RUNNING || state_dest == EXIT)
         addTask_bottom(dest, removeTask(source, t));
     else if (state_dest == READY)
         addTask_sortedList(dest, removeTask(source, t));
-    else //state_dest == BLOCKED
+    else if (state_dest == BLOCKED)
         addBlockedTask(dest, removeTask(source, t));
+    else {
+        fprintf(stderr, "Internal error: state not recognised");
+        exit(EX_SOFTWARE);
+    }
 
     return;
 }
@@ -173,7 +185,9 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     task_t * t_tmp = tasks->first;
     instruction_t * i_tmp;
     while (NULL != t_tmp) { //ciclo che scorre i task dalla testa
-        printf("task id: %u  pc: %p arrival: %u state: %u \n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state);
+      
++       printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n",
+            t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
         
         i_tmp = t_tmp->instr_list;
 
@@ -196,11 +210,12 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     }
     
     //nel percorrerla all'indietro non testiamo nuovamente le liste delle istruzioni
-    printf("\n\n\n---bottom\n");
+    printf("\n---bottom\n");
     t_tmp = tasks->last;
 
     while (NULL != t_tmp) { //ciclo che scorre i task dalla coda
-        printf("task id: %u  pc: %p arrival: %u state: %u \n", t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state);
+        printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n",
+            t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
         t_tmp = t_tmp->prev;
     }
     printf("\n\n");

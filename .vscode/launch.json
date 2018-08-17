@@ -8,7 +8,27 @@
             "name": "(gdb) Bash on Windows Attach",
             "type": "cppdbg",
             "request": "attach",
-            "program": "${workspaceFolder}/parameters.out",
+            "program": "enter program name, for example ${workspaceFolder}/a.exe",
+            "processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "debuggerPath": "/usr/bin/gdb",
+                "pipeProgram": "${env:windir}\\system32\\bash.exe",
+                "pipeArgs": ["-c"],
+                "pipeCwd": ""
+            },
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) Bash on Windows Attach",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "${workspaceFolder}/main.out",
             "processId": "${command:pickRemoteProcess}",
             "pipeTransport": {
                 "debuggerPath": "/usr/bin/gdb",
@@ -28,7 +48,7 @@
             "name": "(gdb) Bash on Windows Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/parameters.out",
+            "program": "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/main.out",
             "args": ["-i gattosilvestro.txt"],
             "stopAtEntry": false,
             "cwd": "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto",
@@ -58,7 +78,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/parameters.out",
+            "program": "${workspaceFolder}/main.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

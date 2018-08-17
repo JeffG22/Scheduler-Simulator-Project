@@ -74,7 +74,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task);
 //lista da cui lo togliamo (first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del);
 
-void moveTask(task_list_t * source, state_t state_source, task_list_t * dest, state_t state_dest, task_t * t, core_t core);
+void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest, task_t * t);
 
 instruction_t * createIstruction(unsigned int type_flag, unsigned int length);
 

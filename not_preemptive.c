@@ -2,11 +2,11 @@
 
 pthread_mutex_t mutex;
 
-void log(FILE *fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
+void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
     if (core == CORE0)
-        fprintf(fw_np, "core0, %lld, %u, %s", ck, task_id, c);
+        fprintf(fw_np, "core0, %lld, %u, %s\n", ck, task_id, c);
     else
-        fprintf(fw_np, "core1, %lld, %u, %s", ck, task_id, c);
+        fprintf(fw_np, "core1, %lld, %u, %s\n", ck, task_id, c);
     return;
 }
 
@@ -30,24 +30,29 @@ void * run_not_preemp(void * args) {
 
         // check on remaining tasks
         if (task_list[NEW].first == NULL && task_list[READY].first == NULL && task_list[BLOCKED].first == NULL){
-            printf("ho finito i task %llu\n", ck);
+            pthread_mutex_unlock(&mutex);
             return NULL;
         }
+
         // check on arrived tasks
         while (task_list[NEW].first != NULL && task_list[NEW].first->arrival_time <= ck) {
-            log(fw_np, core, ck, task_list[NEW].first->id, "ready"); //from new to ready
-            moveTask(&task_list[NEW], NEW, &task_list[READY], READY, task_list[NEW].first, core);
+            unsigned int moved_id = task_list[NEW].first->id;
+            moveTask(task_list, NEW, READY, task_list[NEW].first);
+            log_output(fw_np, core, ck, moved_id, "ready"); //from new to ready
         }
+
         // check on unblocked task
         if (core == CORE0)
             blocked_task = &(task_list[BLOCKED].first);
         else
             blocked_task = &(task_list[BLOCKED].last);
 
-        while (blocked_task != NULL && (*blocked_task)->core == core && (*blocked_task)->wait_time < ck) {
-            log(fw_np, core, ck, (*blocked_task)->id, "ready"); //from blocked to ready
-            moveTask(&task_list[BLOCKED], BLOCKED, &task_list[READY], READY, (*blocked_task), core);
+        while ((*blocked_task) != NULL && (*blocked_task)->core == core && (*blocked_task)->wait_time < ck) {
+            unsigned int moved_id = (*blocked_task)->id;
+            moveTask(task_list, BLOCKED, READY, (*blocked_task));
+            log_output(fw_np, core, ck, moved_id, "ready"); //from blocked to ready
         }
+
 
         /* cerco il primo task da eseguire
             1) ho un task che posso portare in esecuzione -> eseguo
@@ -61,29 +66,31 @@ void * run_not_preemp(void * args) {
         }
         if (run_task == NULL) {
             ck++;
+            pthread_mutex_unlock(&mutex);
             continue;
         }
         
-        log(fw_np, core, ck, run_task->id, "running");
-        moveTask(&task_list[READY], READY, &task_list[RUNNING], RUNNING, run_task, core);
-                
+        moveTask(task_list, READY, RUNNING, run_task);
+        log_output(fw_np, core, ck, run_task->id, "running");
+
         pthread_mutex_unlock(&mutex);
 
-        while(NULL != run_task->pc || run_task->pc->type_flag != 1) {
+        while(NULL != run_task->pc && run_task->pc->type_flag != 1) {
             ck += run_task->pc->length; //esecuzione atomica dell'istruzione
             run_task->pc = run_task->pc->next;
         }
 
         pthread_mutex_lock(&mutex);
         if (run_task->pc == NULL) { //task concluso!
-            log(fw_np, core, ck, run_task->id, "exit");
-            moveTask(&task_list[RUNNING], RUNNING, &task_list[EXIT], EXIT, run_task, core);
+            moveTask(task_list, RUNNING, EXIT, run_task);
+            log_output(fw_np, core, ck, run_task->id, "exit");
         } else { //istruzione bloccante
             run_task->core = core;
             run_task->wait_time = ck + rand() % (run_task->pc->length) + 1;
             run_task->pc = run_task->pc->next;
-            log(fw_np, core, ck, run_task->id, "blocked");
-            moveTask(&task_list[RUNNING], RUNNING, &task_list[BLOCKED], BLOCKED, run_task, core);
+            
+            moveTask(task_list, RUNNING, BLOCKED, run_task);
+            log_output(fw_np, core, ck, run_task->id, "blocked");
         }
 
         pthread_mutex_unlock(&mutex);
@@ -97,12 +104,11 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
 
     //apetura file di output
     //non stampiamo i processi in new perchè non sono assegnati a nessun core
-    FILE *fw_np; //file write not preemp
-    if (fopen(outputname, "w") == NULL) {
+    FILE * fw_np = fopen(outputname, "w"); //file write not preemp
+    if (fw_np == NULL) {
         perror("Looks like there's a problem with your output file for scheduler not_preemp");
         exit(EX_OSFILE);
     }
-    printf("The output file exists! That's a good starting point, I guess.\n");
   
     /*print_input(&task_lists[0], "NEW", 0);
     moveTask(&task_lists[0], &task_lists[1], task_lists[0].first->next); //spostiamo il secondo task in ready
@@ -163,11 +169,11 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
         perror("error on mutex_init");
         exit(EX_OSERR);
     }
-
+/*
     if (fclose(fw_np) != 0) { //chiusura file
         perror("problem to close the file for scheduler not_preemp");
         exit(EX_OSFILE);
     }
-
+*/
     return;
 }

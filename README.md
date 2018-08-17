@@ -1,9 +1,3 @@
-# Per la prox volta
-* aggiorniamo il read me sapendo che dobbiamo
-* portare in firstbranch i miglioramenti fatti su listmaker.c
-* migliorare movetask perchè non serve il puntatore all'elemento corrente
-* fix del bug sulla lista blocked (praticamente inserisce dopo al posto che prima)
-
 # Scheduler-Simulator-Project
 
 A project for the exam of Operating Systems.
@@ -16,35 +10,14 @@ I file eseguibili li mettiamo con estensione .out
 
 ## TO-DO
 
-* Inserimenti ed estrazioni da coda READY (heap o inserimenti ordinati)
-* Inserimenti coda BLOCKED (in coda/in testa) -> moveTask riceve anche il core
-* Estrazione coda BLOCKED (coda/testa)
-* Prossimo processo (scheduling: messa in RUNNING, controllo altre code -> estrarre quelli pronti)
-* Esecuzione istruzioni (incremento clock)
-* Mettere in BLOCKED/EXIT
 * Gestione fine programma (liberare memoria, restituire controllo, chiusura file)
-* Mutex
-* Fine task
-
-## Domande/dubbi
-
-## Log delle cose fatte su firstbranch
-
-* Apertura fw_np in processo
-* Passaggio struct a thread e dichiarazione di alcune variabili utili al thread per scheduling
-* enum core_t, in task_t il campo core e wait_time per indicare da quale processo è stato bloccato e per quanto tempo
-* modificata la funzione moveTask aggiungendo da quale coda a quale altra viene spostato
-* utilizzo mutex nella funzione del thread
-* avanzamento di task, manca la funzione random per attesa
-* dopo esecuzione il task è mandato in blocked o exit
-* funzione log per stampare transizioni
 
 ## _Cose del forum da ricordare_
 
 Q: Supponiamo che un task abbia un'istruzione bloccante come ultima istruzione. Una volta aspettato che si sblocchi, possiamo direttamente mandarlo in "exit"?
 
 A: No, bisogna loggare e scrivere sul file output che il task, seppur terminato, deve prima passare allo stato "ready" e allo stato "running"
- 
+
 Q: Supponiamo che nella ready list (coda dei task ready) abbiamo N processi di cui i primi 10 con la caratteristica di avere la prossima istruzione, quella puntata dal PC, di tipo bloccante (type 1). Possiamo, ALL'INTERNO DELLO STESSO CLOCK, mettere in "running", e poi "blocked", tutti i 10 task uno dopo l'altro, finché non ne trovo uno con istruzione non bloccante (tipo 0)? Per capirci, si può fare come l'esempio seguente (?) :
 
 Core ,Clock ,Task_id, Task_state\

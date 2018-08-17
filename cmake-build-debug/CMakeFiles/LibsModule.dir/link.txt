@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLibsModule.a  CMakeFiles/LibsModule.dir/listmaker.c.o CMakeFiles/LibsModule.dir/not_preemptive.c.o
+/usr/bin/ranlib libLibsModule.a

@@ -20,6 +20,33 @@ void print_help(FILE *stream, int EXIT_CODE) {
     exit(EXIT_CODE);
 }
 
+void freexit(task_list_t task_lists[], int EXIT_CODE) {
+    task_t * t;
+    instruction_t * instr;
+
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
+        while (t != NULL) {
+            instr = t->instr_list;
+            while ( instr != NULL) {
+                if (instr->next != NULL) {
+                    instr = instr->next;
+                    free(instr->prev);
+                }
+                else
+                    free(instr);
+            }
+            if (t->next != NULL) {
+                t = t->next;
+                free(t->prev);
+            }
+            else
+                free(t);
+        }
+    }
+    exit(EXIT_CODE);
+}
+
 int main(int argc, char* argv[]) {
     
     task_list_t task_lists[N_STATES];   //Array di liste di task
@@ -53,11 +80,11 @@ int main(int argc, char* argv[]) {
                     break;
                 case 'n':
                     printf("ON. One day I'll now what this means: %s\n", optarg);
-                    output_not_preemp = optarg;
+                    output_not_preemp = optarg; 
                     break;
                 case 'i':
                     read_input(&task_lists[NEW], optarg);
-                    not_preemptive(task_lists, NULL);
+                    not_preemptive(task_lists, "output.txt");
                     break;
                 case 'h':
                     printf("%d\n%s\n", optopt, optarg); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo

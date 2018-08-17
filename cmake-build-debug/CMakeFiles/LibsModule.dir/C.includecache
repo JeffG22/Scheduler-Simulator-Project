@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.c
+listmaker.h
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.h
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.h
+stdio.h
+-
+getopt.h
+-
+stdlib.h
+-
+sysexits.h
+-
+unistd.h
+-
+stdbool.h
+-
+stdlib.h
+-
+time.h
+-
+sys/types.h
+-
+sys/wait.h
+-
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/not_preemptive.c
+not_preemptive.h
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/not_preemptive.h
+
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/not_preemptive.h
+pthread.h
+-
+listmaker.h
+/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/listmaker.h
+

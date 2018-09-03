@@ -8,6 +8,7 @@ task_t* createTask(unsigned int id, unsigned int arrival_time) {
     if (new_task == NULL) {
         perror("Error while creating a new task");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
     new_task->id = id;
@@ -66,6 +67,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     if (core == -1) {
         fprintf(stderr, "Internal error: core not set");
         exit(EX_SOFTWARE);
+        //freexit(task_lists, EX_SOFTWARE);
     }
     if (core == CORE0) {
         p = tasks->first;
@@ -144,6 +146,7 @@ void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest
     else {
         fprintf(stderr, "Internal error: state not recognised");
         exit(EX_SOFTWARE);
+        //freexit(task_lists, EX_SOFTWARE);
     }
 
     return;
@@ -154,6 +157,7 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
     if (new_instr == NULL) {
         perror("Error while creating a new instruction");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
     
     new_instr->type_flag = type_flag;
@@ -252,9 +256,10 @@ bool read_input(task_list_t * tasks, char * filename) {
     if (!feof(stdin)) { //errore nel raggiungere la fine del file
       fprintf(stderr, "Error: end of file not reached");
       exit(EX_DATAERR);
+      //freexit(task_lists, EX_DATAERR);
     }
         
-    fclose (stdin);
+    fclose(stdin);
 
     return true;
 }

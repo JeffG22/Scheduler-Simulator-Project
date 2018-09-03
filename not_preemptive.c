@@ -3,10 +3,15 @@
 pthread_mutex_t mutex;
 
 void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
+    
     if (core == CORE0)
         fprintf(fw_np, "core0, %lld, %u, %s\n", ck, task_id, c);
-    else
+    else if (core == CORE1)
         fprintf(fw_np, "core1, %lld, %u, %s\n", ck, task_id, c);
+    else {
+        fprintf(fw_np, "errors unexpected on core number");
+        //freexit(task_lists, EX_OSERR);
+    }
     return;
 }
 
@@ -16,8 +21,7 @@ void * run_not_preemp(void * args) {
     task_list_t * task_list = ((thread_args_t *)args)->task_lists;
     FILE * fw_np = ((thread_args_t *)args)->fw_np;
     core_t core = ((thread_args_t *)args)->core;
-
-
+        
     //variabili del thread
     long long unsigned ck = 0; //clock
     task_t ** blocked_task = NULL; //punto al primo task blocked
@@ -108,72 +112,76 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
     if (fw_np == NULL) {
         perror("Looks like there's a problem with your output file for scheduler not_preemp");
         exit(EX_OSFILE);
+        //freexit(task_lists, EX_OSFILE);
     }
-  
-    /*print_input(&task_lists[0], "NEW", 0);
-    moveTask(&task_lists[0], &task_lists[1], task_lists[0].first->next); //spostiamo il secondo task in ready
-    moveTask(&task_lists[0], &task_lists[1], task_lists[0].last); 
-    print_input(&task_lists[0], "NEW", 0);
-    print_input(&task_lists[1], "READY", 0);
-    printf("%p\n", task_lists);*/
     
     //variabili per i due thread
     pthread_t core0_id, core1_id;
     pthread_attr_t attrdefault;
 
     //incapsuliamo gli argomenti da passare al thread in una struct
-    thread_args_t args;
-    args.fw_np = fw_np;
-    args.task_lists = task_lists;
-    args.core = CORE0;
+    thread_args_t args0, args1;
+    args0.fw_np = args1.fw_np = fw_np;
+    args0.task_lists = args1.task_lists = task_lists;
+    args0.core = CORE0;
+    args1.core = CORE1;
 
     if (pthread_mutex_init(&mutex, NULL) != 0) { //inizializzazione mutex da preferire all'assegnamento
         perror("error on mutex_init");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_attr_init(&attrdefault) != 0) { //inizializza a default gli attributi del thread
         perror("error on set thread attributes");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
-    if (pthread_create(&core0_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) { //CREAZIONE CORE0
+    if (pthread_create(&core0_id, &attrdefault, &run_not_preemp, (void*)&args0) != 0) { //CREAZIONE CORE0
         perror("error on pthread create for core0");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
-    args.core = CORE1;
-    if (pthread_create(&core1_id, &attrdefault, &run_not_preemp, (void*)&args) != 0) { //CREAZIONE CORE1
+    if (pthread_create(&core1_id, &attrdefault, &run_not_preemp, (void*)&args1) != 0) { //CREAZIONE CORE1
         perror("error on pthread create for core1");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
     if (&attrdefault != NULL) { //distruzione attributi thread utilizzati
         if (pthread_attr_destroy(&attrdefault) != 0) {
             perror("error on pthread_attr_destroy");
             exit(EX_OSERR);
+            //freexit(task_lists, EX_OSERR);
         }
     }
 
     if (pthread_join (core0_id, NULL) != 0) { //attesa core0
         perror("error on pthread_join");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_join (core1_id, NULL) != 0) { //attesa core1
         perror("error on pthread_join");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_mutex_destroy (&mutex) != 0) { //per distruggerlo deve essere unlockato se no c'è errore
         perror("error on mutex_init");
         exit(EX_OSERR);
+        //freexit(task_lists, EX_OSERR);
     }
-/*
+
     if (fclose(fw_np) != 0) { //chiusura file
         perror("problem to close the file for scheduler not_preemp");
         exit(EX_OSFILE);
+        //freexit(task_lists, EX_OSFILE);
     }
-*/
+
+    //freexitOK(task_lists);
     return;
 }

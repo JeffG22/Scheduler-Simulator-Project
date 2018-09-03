@@ -26,7 +26,7 @@ typedef enum {NEW = 0,
             } state_t;
 
 typedef enum {CORE0 = 0,
-              CORE1 = 1
+              CORE1 = 1,
             } core_t;
 
 typedef struct instruction {

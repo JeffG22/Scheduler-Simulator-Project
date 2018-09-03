@@ -44,7 +44,34 @@ void freexit(task_list_t task_lists[], int EXIT_CODE) {
                 free(t);
         }
     }
+    printf("Exit with code: %d", EXIT_CODE);
     exit(EXIT_CODE);
+}
+
+void freexitOK(task_list_t task_lists[]) {
+    task_t * t;
+    instruction_t * instr;
+
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
+        while (t != NULL) {
+            instr = t->instr_list;
+            while ( instr != NULL) {
+                if (instr->next != NULL) {
+                    instr = instr->next;
+                    free(instr->prev);
+                }
+                else
+                    free(instr);
+            }
+            if (t->next != NULL) {
+                t = t->next;
+                free(t->prev);
+            }
+            else
+                free(t);
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -53,6 +80,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < N_STATES; i++)  
         task_lists[i].first = task_lists[i].last = NULL;
     
+    //variabili per la lettura da linea di comando
     int next_option;
     char *output_preemp, *output_not_preemp;
     output_preemp = output_not_preemp = NULL;
@@ -73,7 +101,6 @@ int main(int argc, char* argv[]) {
     if (argc != 1)
         while ((next_option = getopt_long_only(argc, argv, short_options, long_options, NULL)) != -1) { //verifica condizione con assegnamento
             switch (next_option) {
-                //per ogni file dovremo controllare che esista con access()
                 case 'p':
                     printf("OP. One day I'll now what this means: %s\n", optarg);
                     output_preemp = optarg;
@@ -84,7 +111,7 @@ int main(int argc, char* argv[]) {
                     break;
                 case 'i':
                     read_input(&task_lists[NEW], optarg);
-                    not_preemptive(task_lists, "output.txt");
+                    //not_preemptive(task_lists, "output.txt");
                     break;
                 case 'h':
                     printf("%d\n%s\n", optopt, optarg); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
@@ -107,6 +134,7 @@ int main(int argc, char* argv[]) {
         if (preemp_pid < 0) { //controllo su fork
             perror("Error on fork preemp");
             exit(EX_OSERR);
+            //freexit(task_lists, EX_OSERR);
         }
 
         if(preemp_pid == 0) {//Sono il figlio preemp
@@ -119,6 +147,7 @@ int main(int argc, char* argv[]) {
             if (not_preemp_pid < 0) { //controllo su fork
                 perror("Error on fork not_preemp");
                 exit(EX_OSERR);
+                //freexit(task_lists, EX_OSERR);
             }
 
             if (not_preemp_pid == 0) { //Sono il figlio not_preemp
@@ -129,6 +158,7 @@ int main(int argc, char* argv[]) {
                 if (waitpid(preemp_pid, &preemp_status, 0) == -1) {
                     perror("Error on preemptive process");
                     exit(EX_OSERR);
+                    //freexit(task_lists, EX_OSERR);
                 }
                 else {
                     if(WIFEXITED(preemp_status)) { //according to http://man7.org/linux/man-pages/man2/waitpid.2.html
@@ -142,6 +172,7 @@ int main(int argc, char* argv[]) {
                 if(waitpid(not_preemp_pid, &not_preemp_status, 0) == -1) {
                     perror("Error on non preemptive process");
                     exit(EX_OSERR);
+                    //freexit(task_lists, EX_OSERR);
                 }
                 else {
                     if(WIFEXITED(not_preemp_status)) {
@@ -155,9 +186,6 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    /*
-    per tutti sia processo padre che figli
-    <libera la memoria allocata con malloc>
-    */
-    return 0;
+    freexitOK(task_lists);
+    return 0; //non raggiungibile
 }

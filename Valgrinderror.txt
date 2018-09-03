@@ -1,0 +1,73 @@
+=2142== error calling PR_SET_PTRACER, vgdb might block
+OP. One day I'll now what this means: output.txt
+ON. One day I'll now what this means: output5.txt
+==2143== error calling PR_SET_PTRACER, vgdb might block
+==2144== error calling PR_SET_PTRACER, vgdb might block
+==2143== Invalid read of size 8
+==2143==    at 0x402129: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==  Address 0x5429ba8 is 8 bytes inside a block of size 24 free'd
+==2143==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2143==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==  Block was alloc'd at
+==2143==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2143==    by 0x40153D: createIstruction (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4018AA: read_input (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x402322: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==
+==2143== Invalid free() / delete / delete[] / realloc()
+==2143==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2143==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==  Address 0x5429ba0 is 0 bytes inside a block of size 24 free'd
+==2143==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2143==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==  Block was alloc'd at
+==2143==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2143==    by 0x40153D: createIstruction (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x4018AA: read_input (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==    by 0x402322: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2143==
+==2143==
+==2143== More than 10000000 total errors detected.  I'm not reporting any more.
+==2143== Final error counts will be inaccurate.  Go fix your program!
+==2143== Rerun with --error-limit=no to disable this cutoff.  Note
+==2143== that errors may occur in your program without prior warning from
+==2143== Valgrind, because errors are no longer being displayed.
+==2143==
+==2144== Invalid read of size 8
+==2144==    at 0x402129: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==  Address 0x54a1c48 is 8 bytes inside a block of size 24 free'd
+==2144==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2144==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==  Block was alloc'd at
+==2144==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2144==    by 0x40153D: createIstruction (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4018AA: read_input (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x402322: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==
+==2144== Invalid free() / delete / delete[] / realloc()
+==2144==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2144==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==  Address 0x54a1c40 is 0 bytes inside a block of size 24 free'd
+==2144==    at 0x4C2EDEB: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2144==    by 0x40215B: freexitOK (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4025F1: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==  Block was alloc'd at
+==2144==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2144==    by 0x40153D: createIstruction (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x4018AA: read_input (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==    by 0x402322: main (in /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project/main.out)
+==2144==
+==2144==
+==2144== More than 10000000 total errors detected.  I'm not reporting any more.
+==2144== Final error counts will be inaccurate.  Go fix your program!
+==2144== Rerun with --error-limit=no to disable this cutoff.  Note
+==2144== that errors may occur in your program without prior warning from
+==2144== Valgrind, because errors are no longer being displayed.
+==2144==

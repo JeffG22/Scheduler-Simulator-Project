@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include "listmaker.h"
 #include "not_preemptive.h"
-//#include "preemptive.h"
+#include "preemptive.h"
 
 void print_help(FILE *stream, int EXIT_CODE) {
     fprintf(stream, "Scheduler simulator. Options:\n");
@@ -49,29 +49,42 @@ void freexit(task_list_t task_lists[], int EXIT_CODE) {
 }
 
 void freexitOK(task_list_t task_lists[]) {
-    task_t * t;
-    instruction_t * instr;
-
-    for (int i = 0; i < N_STATES; i++) {
-        t = task_lists[i].first;
+    task_t * t, * t_tmp;
+    instruction_t * instr, * instr_tmp;
+    
+        t = task_lists[EXIT].first;
         while (t != NULL) {
             instr = t->instr_list;
             while ( instr != NULL) {
                 if (instr->next != NULL) {
+                    instr_tmp = instr;
                     instr = instr->next;
-                    free(instr->prev);
+                    free(instr_tmp);
                 }
                 else
                     free(instr);
             }
             if (t->next != NULL) {
+                t_tmp = t;
                 t = t->next;
-                free(t->prev);
+                free(t_tmp);
             }
             else
                 free(t);
         }
+}
+
+void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
+    
+    if (core == CORE0)
+        fprintf(fw_np, "core0, %lld, %u, %s\n", ck, task_id, c);
+    else if (core == CORE1)
+        fprintf(fw_np, "core1, %lld, %u, %s\n", ck, task_id, c);
+    else {
+        fprintf(fw_np, "errors unexpected on core number");
+        //freexit(task_lists, EX_OSERR);
     }
+    return;
 }
 
 int main(int argc, char* argv[]) {
@@ -138,7 +151,7 @@ int main(int argc, char* argv[]) {
         }
 
         if(preemp_pid == 0) {//Sono il figlio preemp
-            //preemptive(output_preemp); 
+            //preemptive(task_lists, output_preemp); 
         }
         else { //Sono il genitore
 
@@ -186,6 +199,6 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    freexitOK(task_lists);
+    //freexitOK(task_lists);
     return 0; //non raggiungibile
 }

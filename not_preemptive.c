@@ -2,19 +2,6 @@
 
 pthread_mutex_t mutex;
 
-void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
-    
-    if (core == CORE0)
-        fprintf(fw_np, "core0, %lld, %u, %s\n", ck, task_id, c);
-    else if (core == CORE1)
-        fprintf(fw_np, "core1, %lld, %u, %s\n", ck, task_id, c);
-    else {
-        fprintf(fw_np, "errors unexpected on core number");
-        //freexit(task_lists, EX_OSERR);
-    }
-    return;
-}
-
 void * run_not_preemp(void * args) {
     
     //cast dei parametri
@@ -56,7 +43,6 @@ void * run_not_preemp(void * args) {
             moveTask(task_list, BLOCKED, READY, (*blocked_task));
             log_output(fw_np, core, ck, moved_id, "ready"); //from blocked to ready
         }
-
 
         /* cerco il primo task da eseguire
             1) ho un task che posso portare in esecuzione -> eseguo

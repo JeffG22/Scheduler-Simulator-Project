@@ -21,38 +21,11 @@ void print_help(FILE *stream, int EXIT_CODE) {
 }
 
 void freexit(task_list_t task_lists[], int EXIT_CODE) {
-    task_t * t;
-    instruction_t * instr;
-
-    for (int i = 0; i < N_STATES; i++) {
-        t = task_lists[i].first;
-        while (t != NULL) {
-            instr = t->instr_list;
-            while ( instr != NULL) {
-                if (instr->next != NULL) {
-                    instr = instr->next;
-                    free(instr->prev);
-                }
-                else
-                    free(instr);
-            }
-            if (t->next != NULL) {
-                t = t->next;
-                free(t->prev);
-            }
-            else
-                free(t);
-        }
-    }
-    printf("Exit with code: %d", EXIT_CODE);
-    exit(EXIT_CODE);
-}
-
-void freexitOK(task_list_t task_lists[]) {
     task_t * t, * t_tmp;
     instruction_t * instr, * instr_tmp;
-    
-        t = task_lists[EXIT].first;
+        
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
         while (t != NULL) {
             instr = t->instr_list;
             while ( instr != NULL) {
@@ -61,17 +34,56 @@ void freexitOK(task_list_t task_lists[]) {
                     instr = instr->next;
                     free(instr_tmp);
                 }
-                else
+                else {
                     free(instr);
+                    break;
+                }
             }
             if (t->next != NULL) {
                 t_tmp = t;
                 t = t->next;
                 free(t_tmp);
             }
-            else
+            else {
                 free(t);
+                break;
+            }
         }
+    }
+    printf("Exit with code: %d", EXIT_CODE);
+    exit(EXIT_CODE);
+}
+
+void freeOK(task_list_t task_lists[], char *c) {
+    task_t * t, * t_tmp;
+    instruction_t * instr, * instr_tmp;
+        
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
+        while (t != NULL) {
+            instr = t->instr_list;
+            while ( instr != NULL) {
+                if (instr->next != NULL) {
+                    instr_tmp = instr;
+                    instr = instr->next;
+                    free(instr_tmp);
+                }
+                else {
+                    free(instr);
+                    break; //necessario! Perchè la free non mette a zero il contenuto
+                }
+            }
+            if (t->next != NULL) {
+                t_tmp = t;
+                t = t->next;
+                free(t_tmp);
+            }
+            else {
+                free(t);
+                break; //necessario! Perchè la free non mette a zero il contenuto
+            }
+        }
+    }
 }
 
 void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
@@ -151,7 +163,8 @@ int main(int argc, char* argv[]) {
         }
 
         if(preemp_pid == 0) {//Sono il figlio preemp
-            //preemptive(task_lists, output_preemp); 
+            //preemptive(task_lists, output_preemp);
+            freeOK(task_lists, "PREEMP");
         }
         else { //Sono il genitore
 
@@ -165,6 +178,7 @@ int main(int argc, char* argv[]) {
 
             if (not_preemp_pid == 0) { //Sono il figlio not_preemp
                 not_preemptive(task_lists, output_not_preemp);
+                freeOK(task_lists, "NOT_PREEMP");
             }
             else {
                                
@@ -194,11 +208,11 @@ int main(int argc, char* argv[]) {
                     else if (WIFSIGNALED(not_preemp_status)) {
                         printf("The not preemptive processor exited abnormally with signal %d.\n", WTERMSIG(not_preemp_status));
                     }
+                    freeOK(task_lists, "MAIN");
                 }
             }
         }
     }
-    
-    //freexitOK(task_lists);
+
     return 0; //non raggiungibile
 }

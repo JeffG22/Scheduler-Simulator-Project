@@ -168,6 +168,5 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
         //freexit(task_lists, EX_OSFILE);
     }
 
-    //freexitOK(task_lists);
     return;
 }

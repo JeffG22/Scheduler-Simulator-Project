@@ -105,19 +105,45 @@ CMakeFiles/LibsModule.dir/not_preemptive.c.o.provides: CMakeFiles/LibsModule.dir
 CMakeFiles/LibsModule.dir/not_preemptive.c.o.provides.build: CMakeFiles/LibsModule.dir/not_preemptive.c.o
 
 
+CMakeFiles/LibsModule.dir/preemptive.c.o: CMakeFiles/LibsModule.dir/flags.make
+CMakeFiles/LibsModule.dir/preemptive.c.o: ../preemptive.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/LibsModule.dir/preemptive.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/LibsModule.dir/preemptive.c.o   -c "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/preemptive.c"
+
+CMakeFiles/LibsModule.dir/preemptive.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LibsModule.dir/preemptive.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/preemptive.c" > CMakeFiles/LibsModule.dir/preemptive.c.i
+
+CMakeFiles/LibsModule.dir/preemptive.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LibsModule.dir/preemptive.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/preemptive.c" -o CMakeFiles/LibsModule.dir/preemptive.c.s
+
+CMakeFiles/LibsModule.dir/preemptive.c.o.requires:
+
+.PHONY : CMakeFiles/LibsModule.dir/preemptive.c.o.requires
+
+CMakeFiles/LibsModule.dir/preemptive.c.o.provides: CMakeFiles/LibsModule.dir/preemptive.c.o.requires
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.o.provides.build
+.PHONY : CMakeFiles/LibsModule.dir/preemptive.c.o.provides
+
+CMakeFiles/LibsModule.dir/preemptive.c.o.provides.build: CMakeFiles/LibsModule.dir/preemptive.c.o
+
+
 # Object files for target LibsModule
 LibsModule_OBJECTS = \
 "CMakeFiles/LibsModule.dir/listmaker.c.o" \
-"CMakeFiles/LibsModule.dir/not_preemptive.c.o"
+"CMakeFiles/LibsModule.dir/not_preemptive.c.o" \
+"CMakeFiles/LibsModule.dir/preemptive.c.o"
 
 # External object files for target LibsModule
 LibsModule_EXTERNAL_OBJECTS =
 
 libLibsModule.a: CMakeFiles/LibsModule.dir/listmaker.c.o
 libLibsModule.a: CMakeFiles/LibsModule.dir/not_preemptive.c.o
+libLibsModule.a: CMakeFiles/LibsModule.dir/preemptive.c.o
 libLibsModule.a: CMakeFiles/LibsModule.dir/build.make
 libLibsModule.a: CMakeFiles/LibsModule.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library libLibsModule.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking C static library libLibsModule.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/LibsModule.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LibsModule.dir/link.txt --verbose=$(VERBOSE)
 
@@ -128,6 +154,7 @@ CMakeFiles/LibsModule.dir/build: libLibsModule.a
 
 CMakeFiles/LibsModule.dir/requires: CMakeFiles/LibsModule.dir/listmaker.c.o.requires
 CMakeFiles/LibsModule.dir/requires: CMakeFiles/LibsModule.dir/not_preemptive.c.o.requires
+CMakeFiles/LibsModule.dir/requires: CMakeFiles/LibsModule.dir/preemptive.c.o.requires
 
 .PHONY : CMakeFiles/LibsModule.dir/requires
 

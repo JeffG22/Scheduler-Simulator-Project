@@ -53,23 +53,27 @@ void * run_preemp(void * args) {
                 (run_task == NULL || ready_task->service_time < run_task->service_time)) {
             ready_task = ready_task->next;
         }
-        if (ready_task == NULL) {
+        if (ready_task == NULL && run_task == NULL) {
             ck++;
             pthread_mutex_unlock(&mutex);
             continue;
-        } else if (ready_task != NULL && ready_task != ready_task && ready_task->arrival_time < ck &&
+        } else if (ready_task != NULL && ready_task->arrival_time <= ck &&
                     (run_task == NULL || run_task->service_time > ready_task->service_time)) {
-            moveTask(task_list, RUNNING, READY, run_task);
-            log_output(fw_np, core, ck, run_task->id, "ready");
+            run_task = ready_task;
+            ready_task = NULL;
+            if (run_task != NULL) {
+                moveTask(task_list, RUNNING, READY, run_task);
+                log_output(fw_np, core, ck, run_task->id, "ready");
+            }
             unsigned int new_id = task_list[READY].first->id;
             moveTask(task_list, READY, RUNNING, task_list[READY].first);
             log_output(fw_np, core, ck, new_id, "running");
-            
+
         }
 
         pthread_mutex_unlock(&mutex);
 
-        if(NULL != run_task->pc && run_task->pc->type_flag != 1) {
+        if(NULL != run_task && NULL != run_task->pc && run_task->pc->type_flag != 1) {
             ck += run_task->pc->length; //esecuzione atomica dell'istruzione
             run_task->service_time -= run_task->pc->length;
             run_task->pc = run_task->pc->next;
@@ -77,11 +81,11 @@ void * run_preemp(void * args) {
 
         pthread_mutex_lock(&mutex);
 
-        if (run_task->pc == NULL) { //task concluso!
+        if (NULL != run_task && run_task->pc == NULL) { //task concluso!
             moveTask(task_list, RUNNING, EXIT, run_task);
             log_output(fw_np, core, ck, run_task->id, "exit");
             run_task = NULL;
-        } else if (run_task->pc->type_flag == 1) { //istruzione bloccante
+        } else if (NULL != run_task && run_task->pc->type_flag == 1) { //istruzione bloccante
             run_task->core = core;
             run_task->wait_time = ck + rand() % (run_task->pc->length) + 1;
             run_task->pc = run_task->pc->next;

@@ -136,7 +136,6 @@ int main(int argc, char* argv[]) {
                     break;
                 case 'i':
                     read_input(&task_lists[NEW], optarg);
-                    //not_preemptive(task_lists, "output.txt");
                     break;
                 case 'h':
                     printf("%d\n%s\n", optopt, optarg); //TODO diversificare i casi in cui riceviamo --h e -help perchè non sono corretti se abbiamo tempo
@@ -163,7 +162,7 @@ int main(int argc, char* argv[]) {
         }
 
         if(preemp_pid == 0) {//Sono il figlio preemp
-            //preemptive(task_lists, output_preemp);
+            preemptive(task_lists, output_preemp);
             freeOK(task_lists, "PREEMP");
         }
         else { //Sono il genitore

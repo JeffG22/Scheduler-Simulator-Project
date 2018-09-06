@@ -8,3 +8,7 @@ CMakeFiles/LibsModule.dir/not_preemptive.c.o: ../listmaker.h
 CMakeFiles/LibsModule.dir/not_preemptive.c.o: ../not_preemptive.c
 CMakeFiles/LibsModule.dir/not_preemptive.c.o: ../not_preemptive.h
 
+CMakeFiles/LibsModule.dir/preemptive.c.o: ../listmaker.h
+CMakeFiles/LibsModule.dir/preemptive.c.o: ../preemptive.c
+CMakeFiles/LibsModule.dir/preemptive.c.o: ../preemptive.h
+

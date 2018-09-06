@@ -217,6 +217,33 @@ not_preemptive.c.s:
 	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/not_preemptive.c.s
 .PHONY : not_preemptive.c.s
 
+preemptive.o: preemptive.c.o
+
+.PHONY : preemptive.o
+
+# target to build an object file
+preemptive.c.o:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.o
+.PHONY : preemptive.c.o
+
+preemptive.i: preemptive.c.i
+
+.PHONY : preemptive.i
+
+# target to preprocess a source file
+preemptive.c.i:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.i
+.PHONY : preemptive.c.i
+
+preemptive.s: preemptive.c.s
+
+.PHONY : preemptive.s
+
+# target to generate assembly for a file
+preemptive.c.s:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.s
+.PHONY : preemptive.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -236,6 +263,9 @@ help:
 	@echo "... not_preemptive.o"
 	@echo "... not_preemptive.i"
 	@echo "... not_preemptive.s"
+	@echo "... preemptive.o"
+	@echo "... preemptive.i"
+	@echo "... preemptive.s"
 .PHONY : help
 
 

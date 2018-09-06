@@ -137,6 +137,12 @@
 		<Unit filename="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/not_preemptive.h">
 			<Option target="LibsModule"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/preemptive.c">
+			<Option target="LibsModule"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/preemptive.h">
+			<Option target="LibsModule"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

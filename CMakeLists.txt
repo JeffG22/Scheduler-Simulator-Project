@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 11)
 ADD_LIBRARY(LibsModule
         listmaker.c
         not_preemptive.c
+        preemptive.c
         )
 
 target_link_libraries(LibsModule -lpthread)

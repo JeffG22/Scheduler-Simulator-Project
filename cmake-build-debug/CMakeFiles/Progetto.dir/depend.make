@@ -4,4 +4,5 @@
 CMakeFiles/Progetto.dir/main.c.o: ../listmaker.h
 CMakeFiles/Progetto.dir/main.c.o: ../main.c
 CMakeFiles/Progetto.dir/main.c.o: ../not_preemptive.h
+CMakeFiles/Progetto.dir/main.c.o: ../preemptive.h
 

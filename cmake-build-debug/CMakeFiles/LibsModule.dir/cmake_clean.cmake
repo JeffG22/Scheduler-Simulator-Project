@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LibsModule.dir/listmaker.c.o"
   "CMakeFiles/LibsModule.dir/not_preemptive.c.o"
+  "CMakeFiles/LibsModule.dir/preemptive.c.o"
   "libLibsModule.pdb"
   "libLibsModule.a"
 )

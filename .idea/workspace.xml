@@ -12,17 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b870daa-c21c-473a-8e8e-98519d5a0732" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Progetto" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Progetto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/listmaker.c" beforeDir="false" afterPath="$PROJECT_DIR$/listmaker.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notpr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notpr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outnon.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outpr.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/preemp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/preemp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preemptive.c" beforeDir="false" afterPath="$PROJECT_DIR$/preemptive.c" afterDir="false" />
-    </list>
+    <list default="true" id="5b870daa-c21c-473a-8e8e-98519d5a0732" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +27,8 @@
       <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="131" selection-start-line="131" selection-end-line="131" />
+            <state relative-caret-position="-912">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -58,8 +48,8 @@
       <file leaf-file-name="listmaker.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/listmaker.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="60">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
@@ -192,7 +182,7 @@
       <workItem from="1536265779465" duration="2805000" />
       <workItem from="1536334729048" duration="1715000" />
       <workItem from="1536422586693" duration="526000" />
-      <workItem from="1536423419849" duration="479000" />
+      <workItem from="1536423419849" duration="1095000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiornato con una nuova linea utilissima">
       <created>1526464020069</created>
@@ -226,11 +216,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23603000" />
+    <option name="totallyTimeSpent" value="24219000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24917382" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -242,7 +231,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4017094" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4017094" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -518,15 +507,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/listmaker.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="60">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="131" selection-start-line="131" selection-end-line="131" />
+        <state relative-caret-position="-912">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

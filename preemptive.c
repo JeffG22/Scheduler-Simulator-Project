@@ -59,12 +59,12 @@ void * run_preemp(void * args) {
             continue;
         } else if (ready_task != NULL && ready_task->arrival_time <= ck &&
                     (run_task == NULL || run_task->service_time > ready_task->service_time)) {
-            run_task = ready_task;
-            ready_task = NULL;
             if (run_task != NULL) {
                 moveTask(task_list, RUNNING, READY, run_task);
                 log_output(fw_np, core, ck, run_task->id, "ready");
             }
+            run_task = ready_task;
+            ready_task = NULL;
             unsigned int new_id = task_list[READY].first->id;
             moveTask(task_list, READY, RUNNING, task_list[READY].first);
             log_output(fw_np, core, ck, new_id, "running");

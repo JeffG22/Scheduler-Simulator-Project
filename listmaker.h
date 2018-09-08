@@ -84,4 +84,8 @@ void print_input(task_list_t * tasks, char *c, int print_instr);
 
 bool read_input(task_list_t * tasks, char * filename);
 
+void freexit(task_list_t task_lists[], int EXIT_CODE);
+
+void freeOK(task_list_t task_lists[]);
+
 #endif

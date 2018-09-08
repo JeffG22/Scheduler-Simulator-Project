@@ -97,8 +97,7 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
     FILE * fw_np = fopen(outputname, "w"); //file write not preemp
     if (fw_np == NULL) {
         perror("Looks like there's a problem with your output file for scheduler not_preemp");
-        exit(EX_OSFILE);
-        //freexit(task_lists, EX_OSFILE);
+        freexit(task_lists, EX_OSFILE);
     }
     
     //variabili per i due thread
@@ -114,58 +113,49 @@ void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione ch
 
     if (pthread_mutex_init(&mutex, NULL) != 0) { //inizializzazione mutex da preferire all'assegnamento
         perror("error on mutex_init");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_attr_init(&attrdefault) != 0) { //inizializza a default gli attributi del thread
         perror("error on set thread attributes");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_create(&core0_id, &attrdefault, &run_not_preemp, (void*)&args0) != 0) { //CREAZIONE CORE0
         perror("error on pthread create for core0");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_create(&core1_id, &attrdefault, &run_not_preemp, (void*)&args1) != 0) { //CREAZIONE CORE1
         perror("error on pthread create for core1");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (&attrdefault != NULL) { //distruzione attributi thread utilizzati
         if (pthread_attr_destroy(&attrdefault) != 0) {
             perror("error on pthread_attr_destroy");
-            exit(EX_OSERR);
-            //freexit(task_lists, EX_OSERR);
+            freexit(task_lists, EX_OSERR);
         }
     }
 
     if (pthread_join (core0_id, NULL) != 0) { //attesa core0
         perror("error on pthread_join");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_join (core1_id, NULL) != 0) { //attesa core1
         perror("error on pthread_join");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_mutex_destroy (&mutex) != 0) { //per distruggerlo deve essere unlockato se no c'è errore
         perror("error on mutex_init");
-        exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
+        freexit(task_lists, EX_OSERR);
     }
 
     if (fclose(fw_np) != 0) { //chiusura file
         perror("problem to close the file for scheduler not_preemp");
-        exit(EX_OSFILE);
-        //freexit(task_lists, EX_OSFILE);
+        freexit(task_lists, EX_OSFILE);
     }
 
     return;

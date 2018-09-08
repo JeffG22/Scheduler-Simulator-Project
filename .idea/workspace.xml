@@ -15,8 +15,12 @@
     <list default="true" id="5b870daa-c21c-473a-8e8e-98519d5a0732" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Progetto" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Progetto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outnon.txt" beforeDir="false" afterPath="$PROJECT_DIR$/outnon.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outpr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/outpr.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/listmaker.c" beforeDir="false" afterPath="$PROJECT_DIR$/listmaker.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notpr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notpr.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outnon.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outpr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/preemp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/preemp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/preemptive.c" beforeDir="false" afterPath="$PROJECT_DIR$/preemptive.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -30,11 +34,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="127" column="34" lean-forward="true" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
+            <state relative-caret-position="144">
+              <caret line="131" selection-start-line="131" selection-end-line="131" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -42,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="preemptive.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="preemptive.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/preemptive.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
+            <state relative-caret-position="124">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -54,15 +58,10 @@
       <file leaf-file-name="listmaker.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/listmaker.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="128" selection-start-line="128" selection-end-line="128" />
+            <state relative-caret-position="124">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="not_preemptive.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/not_preemptive.c">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
@@ -115,16 +114,17 @@
     <packageJsonPaths />
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="width" value="1787" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="width" value="1789" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -136,7 +136,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -160,8 +159,8 @@
   </component>
   <component name="RunManager" selected="Application.Progetto">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i gattosilvestro.txt" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Progetto" RUN_TARGET_NAME="Progetto" EXPLICIT_BUILD_TARGET_NAME="all" />
-    <configuration name="LibsModule" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Progetto" TARGET_NAME="LibsModule" CONFIG_NAME="Debug" />
-    <configuration name="Progetto" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i ../gattosilvestro.txt -op ../preemp.txt -on ../notpr.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Progetto" TARGET_NAME="Progetto" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Progetto" RUN_TARGET_NAME="Progetto" />
+    <configuration name="LibsModule" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Progetto" TARGET_NAME="LibsModule" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Progetto" RUN_TARGET_NAME="Progetto" />
+    <configuration name="Progetto" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i ../01_tasks.csv -op ../preemp.txt -on ../notpr.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Progetto" TARGET_NAME="Progetto" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Progetto" RUN_TARGET_NAME="Progetto" />
     <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-i gattosilvestro.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Progetto" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Progetto" RUN_TARGET_NAME="Progetto" />
     <list>
       <item itemvalue="Application.Build All" />
@@ -192,6 +191,8 @@
       <workItem from="1535990764563" duration="49000" />
       <workItem from="1536265779465" duration="2805000" />
       <workItem from="1536334729048" duration="1715000" />
+      <workItem from="1536422586693" duration="526000" />
+      <workItem from="1536423419849" duration="479000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiornato con una nuova linea utilissima">
       <created>1526464020069</created>
@@ -225,22 +226,23 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22598000" />
+    <option name="totallyTimeSpent" value="23603000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="1429" height="830" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27083334" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24917382" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32708934" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32621083" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.32621083" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.33898306" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32708934" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32621083" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4020173" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4017094" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -265,12 +267,12 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/preemptive.c</url>
-          <line>21</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>130</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="27" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -283,6 +285,68 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2208">
+          <caret line="138" column="27" selection-start-line="138" selection-start-column="20" selection-end-line="138" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preemptive.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listmaker.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3632">
+          <caret line="227" column="10" lean-forward="true" selection-start-line="227" selection-start-column="10" selection-end-line="227" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2032">
+          <caret line="127" column="34" lean-forward="true" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preemptive.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="832">
+          <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listmaker.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2048">
+          <caret line="128" selection-start-line="128" selection-end-line="128" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2096">
@@ -306,9 +370,6 @@
           <caret line="129" selection-start-line="129" selection-end-line="129" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/not_preemptive.c">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -448,9 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/not_preemptive.c">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -460,25 +518,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/listmaker.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preemptive.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
+        <state relative-caret-position="124">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="127" column="34" lean-forward="true" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
+        <state relative-caret-position="144">
+          <caret line="131" selection-start-line="131" selection-end-line="131" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preemptive.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>

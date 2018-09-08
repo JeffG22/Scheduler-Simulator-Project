@@ -1,14 +1,10 @@
 #include "listmaker.h"
 
-//TO-DO: in read_input, trovare e stampare la riga a cui è avvenuto l'errore
-//TO-DO: nel caso di memory leak sostituiamo ad exit una funzione che termina liberando tutta la memoria (free)
-
 task_t* createTask(unsigned int id, unsigned int arrival_time) {
     task_t* new_task = (task_t*) malloc(sizeof(task_t));
     if (new_task == NULL) {
         perror("Error while creating a new task");
         exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
     }
 
     new_task->id = id;
@@ -67,7 +63,6 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
     if (core == -1) {
         fprintf(stderr, "Internal error: core not set");
         exit(EX_SOFTWARE);
-        //freexit(task_lists, EX_SOFTWARE);
     }
     if (core == CORE0) {
         p = tasks->first;
@@ -145,8 +140,7 @@ void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest
         addBlockedTask(dest, removeTask(source, t));
     else {
         fprintf(stderr, "Internal error: state not recognised");
-        exit(EX_SOFTWARE);
-        //freexit(task_lists, EX_SOFTWARE);
+        freexit(task_lists, EX_SOFTWARE);
     }
 
     return;
@@ -157,7 +151,6 @@ instruction_t * createIstruction(unsigned int type_flag, unsigned int length) {
     if (new_instr == NULL) {
         perror("Error while creating a new instruction");
         exit(EX_OSERR);
-        //freexit(task_lists, EX_OSERR);
     }
     
     new_instr->type_flag = type_flag;
@@ -254,12 +247,80 @@ bool read_input(task_list_t * tasks, char * filename) {
     }
 
     if (!feof(stdin)) { //errore nel raggiungere la fine del file
-      fprintf(stderr, "Error: end of file not reached");
+      fprintf(stderr, "Error: end of file not reached");;
       exit(EX_DATAERR);
-      //freexit(task_lists, EX_DATAERR);
     }
         
     fclose(stdin);
 
     return true;
 }
+
+
+void freexit(task_list_t task_lists[], int EXIT_CODE) {
+    task_t * t, * t_tmp;
+    instruction_t * instr, * instr_tmp;
+        
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
+        while (t != NULL) {
+            instr = t->instr_list;
+            while ( instr != NULL) {
+                if (instr->next != NULL) {
+                    instr_tmp = instr;
+                    instr = instr->next;
+                    free(instr_tmp);
+                }
+                else {
+                    free(instr);
+                    break;
+                }
+            }
+            if (t->next != NULL) {
+                t_tmp = t;
+                t = t->next;
+                free(t_tmp);
+            }
+            else {
+                free(t);
+                break;
+            }
+        }
+    }
+    printf("Exit with code: %d", EXIT_CODE);
+    exit(EXIT_CODE);
+}
+
+void freeOK(task_list_t task_lists[]) {
+    task_t * t, * t_tmp;
+    instruction_t * instr, * instr_tmp;
+        
+    for (int i = 0; i < N_STATES; i++) {
+        t = task_lists[i].first;
+        while (t != NULL) {
+            instr = t->instr_list;
+            while (instr != NULL) {
+                if (instr->next != NULL) {
+                    instr_tmp = instr;
+                    instr = instr->next;
+                    free(instr_tmp);
+                }
+                else {
+                    free(instr);
+                    break; //necessario! Perchè la free non mette a zero il contenuto
+                }
+            }
+            if (t->next != NULL) {
+                t_tmp = t;
+                t = t->next;
+                free(t_tmp);
+            }
+            else {
+                free(t);
+                break; //necessario! Perchè la free non mette a zero il contenuto
+            }
+        }
+    }
+}
+
+

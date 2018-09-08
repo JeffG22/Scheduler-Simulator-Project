@@ -20,72 +20,6 @@ void print_help(FILE *stream, int EXIT_CODE) {
     exit(EXIT_CODE);
 }
 
-void freexit(task_list_t task_lists[], int EXIT_CODE) {
-    task_t * t, * t_tmp;
-    instruction_t * instr, * instr_tmp;
-        
-    for (int i = 0; i < N_STATES; i++) {
-        t = task_lists[i].first;
-        while (t != NULL) {
-            instr = t->instr_list;
-            while ( instr != NULL) {
-                if (instr->next != NULL) {
-                    instr_tmp = instr;
-                    instr = instr->next;
-                    free(instr_tmp);
-                }
-                else {
-                    free(instr);
-                    break;
-                }
-            }
-            if (t->next != NULL) {
-                t_tmp = t;
-                t = t->next;
-                free(t_tmp);
-            }
-            else {
-                free(t);
-                break;
-            }
-        }
-    }
-    printf("Exit with code: %d", EXIT_CODE);
-    exit(EXIT_CODE);
-}
-
-void freeOK(task_list_t task_lists[], char *c) {
-    task_t * t, * t_tmp;
-    instruction_t * instr, * instr_tmp;
-        
-    for (int i = 0; i < N_STATES; i++) {
-        t = task_lists[i].first;
-        while (t != NULL) {
-            instr = t->instr_list;
-            while ( instr != NULL) {
-                if (instr->next != NULL) {
-                    instr_tmp = instr;
-                    instr = instr->next;
-                    free(instr_tmp);
-                }
-                else {
-                    free(instr);
-                    break; //necessario! Perchè la free non mette a zero il contenuto
-                }
-            }
-            if (t->next != NULL) {
-                t_tmp = t;
-                t = t->next;
-                free(t_tmp);
-            }
-            else {
-                free(t);
-                break; //necessario! Perchè la free non mette a zero il contenuto
-            }
-        }
-    }
-}
-
 void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned int task_id, char *c) {
     
     if (core == CORE0)
@@ -94,7 +28,7 @@ void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned i
         fprintf(fw_np, "core1, %lld, %u, %s\n", ck, task_id, c);
     else {
         fprintf(fw_np, "errors unexpected on core number");
-        //freexit(task_lists, EX_OSERR);
+        exit(EX_OSERR);
     }
     return;
 }
@@ -157,13 +91,12 @@ int main(int argc, char* argv[]) {
 
         if (preemp_pid < 0) { //controllo su fork
             perror("Error on fork preemp");
-            exit(EX_OSERR);
-            //freexit(task_lists, EX_OSERR);
+            freexit(task_lists, EX_OSERR);
         }
 
         if(preemp_pid == 0) {//Sono il figlio preemp
             preemptive(task_lists, output_preemp);
-            freeOK(task_lists, "PREEMP");
+            freeOK(task_lists); //libero la memoria senza terminare il programma
         }
         else { //Sono il genitore
 
@@ -171,20 +104,18 @@ int main(int argc, char* argv[]) {
             
             if (not_preemp_pid < 0) { //controllo su fork
                 perror("Error on fork not_preemp");
-                exit(EX_OSERR);
-                //freexit(task_lists, EX_OSERR);
+                freexit(task_lists, EX_OSERR);
             }
 
             if (not_preemp_pid == 0) { //Sono il figlio not_preemp
                 not_preemptive(task_lists, output_not_preemp);
-                freeOK(task_lists, "NOT_PREEMP");
+                freeOK(task_lists);
             }
             else {
-                               
+                freeOK(task_lists);           
                 if (waitpid(preemp_pid, &preemp_status, 0) == -1) {
                     perror("Error on preemptive process");
-                    exit(EX_OSERR);
-                    //freexit(task_lists, EX_OSERR);
+                    freexit(task_lists, EX_OSERR);
                 }
                 else {
                     if(WIFEXITED(preemp_status)) { //according to http://man7.org/linux/man-pages/man2/waitpid.2.html
@@ -197,8 +128,7 @@ int main(int argc, char* argv[]) {
 
                 if(waitpid(not_preemp_pid, &not_preemp_status, 0) == -1) {
                     perror("Error on non preemptive process");
-                    exit(EX_OSERR);
-                    //freexit(task_lists, EX_OSERR);
+                    freexit(task_lists, EX_OSERR);
                 }
                 else {
                     if(WIFEXITED(not_preemp_status)) {
@@ -207,7 +137,6 @@ int main(int argc, char* argv[]) {
                     else if (WIFSIGNALED(not_preemp_status)) {
                         printf("The not preemptive processor exited abnormally with signal %d.\n", WTERMSIG(not_preemp_status));
                     }
-                    freeOK(task_lists, "MAIN");
                 }
             }
         }

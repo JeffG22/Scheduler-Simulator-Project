@@ -3,6 +3,8 @@
         "stdbool.h": "c",
         "sysexits.h": "c",
         "stdlib.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "not_preemptive.h": "c",
+        "wait.h": "c"
     }
 }

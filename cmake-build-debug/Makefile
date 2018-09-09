@@ -111,17 +111,57 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named LibsModule
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+LibsModule: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 LibsModule
+.PHONY : LibsModule
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+LibsModule/fast:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/build
+.PHONY : LibsModule/fast
+
+#=============================================================================
+# Target rules for targets named Progetto
+
+# Build rule for target.
+Progetto: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Progetto
+.PHONY : Progetto
+
+# fast build rule for target.
+Progetto/fast:
+	$(MAKE) -f CMakeFiles/Progetto.dir/build.make CMakeFiles/Progetto.dir/build
+.PHONY : Progetto/fast
+
+listmaker.o: listmaker.c.o
+
+.PHONY : listmaker.o
+
+# target to build an object file
+listmaker.c.o:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/listmaker.c.o
+.PHONY : listmaker.c.o
+
+listmaker.i: listmaker.c.i
+
+.PHONY : listmaker.i
+
+# target to preprocess a source file
+listmaker.c.i:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/listmaker.c.i
+.PHONY : listmaker.c.i
+
+listmaker.s: listmaker.c.s
+
+.PHONY : listmaker.s
+
+# target to generate assembly for a file
+listmaker.c.s:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/listmaker.c.s
+.PHONY : listmaker.c.s
 
 main.o: main.c.o
 
@@ -129,7 +169,7 @@ main.o: main.c.o
 
 # target to build an object file
 main.c.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.o
+	$(MAKE) -f CMakeFiles/Progetto.dir/build.make CMakeFiles/Progetto.dir/main.c.o
 .PHONY : main.c.o
 
 main.i: main.c.i
@@ -138,7 +178,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.i
+	$(MAKE) -f CMakeFiles/Progetto.dir/build.make CMakeFiles/Progetto.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -147,8 +187,62 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.s
+	$(MAKE) -f CMakeFiles/Progetto.dir/build.make CMakeFiles/Progetto.dir/main.c.s
 .PHONY : main.c.s
+
+not_preemptive.o: not_preemptive.c.o
+
+.PHONY : not_preemptive.o
+
+# target to build an object file
+not_preemptive.c.o:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/not_preemptive.c.o
+.PHONY : not_preemptive.c.o
+
+not_preemptive.i: not_preemptive.c.i
+
+.PHONY : not_preemptive.i
+
+# target to preprocess a source file
+not_preemptive.c.i:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/not_preemptive.c.i
+.PHONY : not_preemptive.c.i
+
+not_preemptive.s: not_preemptive.c.s
+
+.PHONY : not_preemptive.s
+
+# target to generate assembly for a file
+not_preemptive.c.s:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/not_preemptive.c.s
+.PHONY : not_preemptive.c.s
+
+preemptive.o: preemptive.c.o
+
+.PHONY : preemptive.o
+
+# target to build an object file
+preemptive.c.o:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.o
+.PHONY : preemptive.c.o
+
+preemptive.i: preemptive.c.i
+
+.PHONY : preemptive.i
+
+# target to preprocess a source file
+preemptive.c.i:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.i
+.PHONY : preemptive.c.i
+
+preemptive.s: preemptive.c.s
+
+.PHONY : preemptive.s
+
+# target to generate assembly for a file
+preemptive.c.s:
+	$(MAKE) -f CMakeFiles/LibsModule.dir/build.make CMakeFiles/LibsModule.dir/preemptive.c.s
+.PHONY : preemptive.c.s
 
 # Help Target
 help:
@@ -157,11 +251,21 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... main"
+	@echo "... LibsModule"
 	@echo "... edit_cache"
+	@echo "... Progetto"
+	@echo "... listmaker.o"
+	@echo "... listmaker.i"
+	@echo "... listmaker.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... not_preemptive.o"
+	@echo "... not_preemptive.i"
+	@echo "... not_preemptive.s"
+	@echo "... preemptive.o"
+	@echo "... preemptive.i"
+	@echo "... preemptive.s"
 .PHONY : help
 
 

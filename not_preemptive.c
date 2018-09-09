@@ -49,28 +49,33 @@ void * run_not_preemp(void * args) {
             2) non ho un task che posso portare in esecuzione -> aspetto ed incremento ck
         */
         
+        //looking for the first executable task
         run_task = task_list[READY].first;
-                
         while (run_task != NULL && run_task->arrival_time > ck) {
             run_task = run_task->next;
         }
+
+        //no executable task
         if (run_task == NULL) {
             ck++;
-            pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex); //necessario perchè finisce l'iterazione attuale!
             continue;
         }
         
+        //task ready in running
         moveTask(task_list, READY, RUNNING, run_task);
         log_output(fw_np, core, ck, run_task->id, "running");
 
         pthread_mutex_unlock(&mutex);
 
+        //esecuzione not_preemptive del task
         while(NULL != run_task->pc && run_task->pc->type_flag != 1) {
             ck += run_task->pc->length; //esecuzione atomica dell'istruzione
             run_task->pc = run_task->pc->next;
         }
 
         pthread_mutex_lock(&mutex);
+
         if (run_task->pc == NULL) { //task concluso!
             moveTask(task_list, RUNNING, EXIT, run_task);
             log_output(fw_np, core, ck, run_task->id, "exit");
@@ -93,7 +98,6 @@ void * run_not_preemp(void * args) {
 void not_preemptive(task_list_t task_lists[], char * outputname) { //funzione chiamata dal main
 
     //apetura file di output
-    //non stampiamo i processi in new perchè non sono assegnati a nessun core
     FILE * fw_np = fopen(outputname, "w"); //file write not preemp
     if (fw_np == NULL) {
         perror("Looks like there's a problem with your output file for scheduler not_preemp");

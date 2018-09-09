@@ -37,6 +37,7 @@ void addTask_bottom(task_list_t * tasks, task_t * new_task) {
 }
 
 void addTask_sortedList(task_list_t * tasks, task_t * new_task) {
+    /*la funzione mantiene la lista ordinata per service time cercando il posto del task */
     unsigned int serv_time = new_task->service_time;
     task_t * p = tasks->first;
     while (p != NULL && p->service_time <= serv_time) {
@@ -57,6 +58,8 @@ void addTask_sortedList(task_list_t * tasks, task_t * new_task) {
 }
 
 void addBlockedTask(task_list_t * tasks, task_t * new_task) {
+    //la lista ha nella prima metà i tasks del core0 ordinati per tempo di attesa crescente
+    //nella seconda metà sono ordinati in ordine decrescente quelli del core1
     unsigned int wait_time = new_task->wait_time;
     core_t core = new_task->core;
     task_t * p;
@@ -64,7 +67,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
         fprintf(stderr, "Internal error: core not set");
         exit(EX_SOFTWARE);
     }
-    if (core == CORE0) {
+    if (core == CORE0) { //l'inserimento per il core0 avviene in testa
         p = tasks->first;
         while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->next;
@@ -80,7 +83,7 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
             p->prev = new_task;
         }
     }
-    else {
+    else { //l'inserimento per il core1 avviene in coda
         p = tasks->last;
         while (p != NULL && p->core == core && p->wait_time <= wait_time)
             p = p->prev;
@@ -106,7 +109,6 @@ void addBlockedTask(task_list_t * tasks, task_t * new_task) {
 }
 
 
-//lista da cui lo togliamo (puntatore a first e last), puntatore all'elemento da togliere
 task_t * removeTask(task_list_t * tasks, task_t * del) {
     if (NULL == del) return NULL;
     if (del == tasks->first)
@@ -127,7 +129,7 @@ void moveTask(task_list_t task_lists[], state_t state_source, state_t state_dest
     * l'inserimento avviene per:
     * NEW,RUNNING,EXIT in coda
     * READY in modo ordinato secondo la priorità del processo
-    * BLOCKED in modo ordinato secondo il tempo di atteso partendo dalla testa per core0 e dalla coda per core1
+    * BLOCKED in modo ordinato secondo il tempo di attesa partendo dalla testa per core0 e dalla coda per core1
     */
 
    //printf("%u from %d to %d\n", t->id, state_source, state_dest); //stampo id e numero delle liste from e to
@@ -175,9 +177,9 @@ void addInstruction(task_t * task, instruction_t * new_instr) {
     return;
 }
 
-/*
 void print_input(task_list_t * tasks, char *c, int print_instr) {
-    printf("stampo lista %s\n", c);
+    //print_instr flag {0,1} per indicare se stampare le istruzioni dei tasks
+    printf("stampo lista %s\n", c); //con c indico quale lista stampo
  
     printf("v~~top\n");
     task_t * t_tmp = tasks->first;
@@ -218,7 +220,7 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     }
     printf("\n\n");
 }
-*/
+
 bool read_input(task_list_t * tasks, char * filename) {
 
     if (freopen(filename, "r", stdin) == NULL) { //Associa il file di input con stdin

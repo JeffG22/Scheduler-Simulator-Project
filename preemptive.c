@@ -2,6 +2,7 @@
 
 pthread_mutex_t mutex;
 
+//funzione che si occupa dello spostamento dei tasks da new e blocked a ready
 void moveInReady(task_list_t * task_list, FILE * fw_np, core_t core, long long unsigned ck) {
     task_t ** blocked_task = NULL; //punto al primo task blocked
     
@@ -50,15 +51,16 @@ void * run_preemp(void * args) {
         }
 
         moveInReady(task_list, fw_np, core, ck);
-               
-        //if (run_task == NULL) può succedere che ci sia run_task != NULL ma abbiamo bisogno di assegnare ready_task
-            ready_task = task_list[READY].first;
-                
+
+        //finding out the first ready task according the ck of this thread  
+        ready_task = task_list[READY].first;   
         while (ready_task != NULL && ready_task->arrival_time > ck && 
                 (run_task == NULL || ready_task->service_time < run_task->service_time)) {
             ready_task = ready_task->next;
         }
-        if (ready_task == NULL && run_task == NULL) {
+
+        //compare between the ready task and the running task if presents
+        if (ready_task == NULL && run_task == NULL) { //no tasks can be executing, increase of the ck
             ck++;
             pthread_mutex_unlock(&mutex);
             continue;
@@ -74,11 +76,12 @@ void * run_preemp(void * args) {
             log_output(fw_np, core, ck, ready_task->id, "running");
             ready_task = NULL;
 
-        } //swap tra tasks in running e in ready per priorità tra i tasks
+        } //swap tra tasks in running e in ready per priorità tra i tasks oppure rimane in running il processo precedente
 
         pthread_mutex_unlock(&mutex);
 
-        if(NULL != run_task && NULL != run_task->pc && run_task->pc->type_flag != 1) {
+        //if(NULL != run_task && NULL != run_task->pc && run_task->pc->type_flag != 1) { //esecuzione del task!
+        if(NULL != run_task->pc && run_task->pc->type_flag != 1) { 
             for(int i = 0; i < run_task->pc->length; i++) {
                 ck++;
                 pthread_mutex_lock(&mutex);
@@ -91,11 +94,13 @@ void * run_preemp(void * args) {
 
         pthread_mutex_lock(&mutex);
 
-        if (NULL != run_task && run_task->pc == NULL) { //task concluso!
+        //if (NULL != run_task && run_task->pc == NULL) { //task concluso!
+        if (run_task->pc == NULL) { //task concluso!
             moveTask(task_list, RUNNING, EXIT, run_task);
             log_output(fw_np, core, ck, run_task->id, "exit");
             run_task = NULL;
-        } else if (NULL != run_task && run_task->pc->type_flag == 1) { //istruzione bloccante
+        //} else if (NULL != run_task && run_task->pc->type_flag == 1) { //istruzione bloccante
+        } else if (run_task->pc->type_flag == 1) { //istruzione bloccante
             run_task->core = core;
             run_task->wait_time = ck + rand() % (run_task->pc->length) + 1;
             run_task->pc = run_task->pc->next;
@@ -115,7 +120,6 @@ void * run_preemp(void * args) {
 void preemptive(task_list_t task_lists[], char * outputname) { //funzione chiamata dal main
 
     //apetura file di output
-    //non stampiamo i processi in new perchè non sono assegnati a nessun core
     FILE * fw_np = fopen(outputname, "w"); //file write preemp
     if (fw_np == NULL) {
         perror("Looks like there's a problem with your output file for scheduler preemp");
@@ -152,8 +156,8 @@ void preemptive(task_list_t task_lists[], char * outputname) { //funzione chiama
         perror("error on pthread create for core1");
         freexit(task_lists, EX_OSERR);
     }
-
-    if (pthread_attr_destroy(&attrdefault) != 0) {  //distruzione attributi thread utilizzati
+    
+    if (pthread_attr_destroy(&attrdefault) != 0) { //distruzione attributi thread utilizzati
         perror("error on pthread_attr_destroy");
         freexit(task_lists, EX_OSERR);
     }

@@ -1,6 +1,18 @@
-cmake_minimum_required(VERSION 3.5)
-project(parameters C)
+cmake_minimum_required(VERSION 3.10)
+project(Progetto C)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 
-add_executable(main main.c)
+ADD_LIBRARY(LibsModule
+        listmaker.c
+        not_preemptive.c
+        preemptive.c
+        )
+
+target_link_libraries(LibsModule -lpthread)
+
+include_directories(.)
+
+add_executable(Progetto main.c)
+
+target_link_libraries(Progetto LibsModule)

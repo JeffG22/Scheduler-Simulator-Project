@@ -1,4 +1,6 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto"
--- Configuring done
--- Generating done
--- Build files have been written to: /mnt/c/Users/User/OneDrive - studenti.unige.it/Secondo Anno/Calcolatori Elettronici/!VM_Shared/Progetto/cmake-build-debug
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /mnt/d/Documenti/GitHub/Scheduler-Simulator-Project
+CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
+  CMake 3.10 or higher is required.  You are running version 3.5.1
+
+
+-- Configuring incomplete, errors occurred!

@@ -64,7 +64,6 @@ void * run_preemp(void * args) {
             ck++;
             pthread_mutex_unlock(&mutex);
             continue;
-       // } else if (ready_task != NULL && ready_task->arrival_time <= ck && da controllare se <= è doppio
         } else if (ready_task != NULL && //forse non serve la condizione <=
                     (run_task == NULL || run_task->service_time > ready_task->service_time)) {
             if (run_task != NULL) {
@@ -80,7 +79,6 @@ void * run_preemp(void * args) {
 
         pthread_mutex_unlock(&mutex);
 
-        //if(NULL != run_task && NULL != run_task->pc && run_task->pc->type_flag != 1) { //esecuzione del task!
         if(NULL != run_task->pc && run_task->pc->type_flag != 1) { 
             for(int i = 0; i < run_task->pc->length; i++) {
                 ck++;
@@ -94,12 +92,10 @@ void * run_preemp(void * args) {
 
         pthread_mutex_lock(&mutex);
 
-        //if (NULL != run_task && run_task->pc == NULL) { //task concluso!
         if (run_task->pc == NULL) { //task concluso!
             moveTask(task_list, RUNNING, EXIT, run_task);
             log_output(fw_np, core, ck, run_task->id, "exit");
             run_task = NULL;
-        //} else if (NULL != run_task && run_task->pc->type_flag == 1) { //istruzione bloccante
         } else if (run_task->pc->type_flag == 1) { //istruzione bloccante
             run_task->core = core;
             run_task->wait_time = ck + rand() % (run_task->pc->length) + 1;

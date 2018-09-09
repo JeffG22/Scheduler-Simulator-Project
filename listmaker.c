@@ -177,50 +177,6 @@ void addInstruction(task_t * task, instruction_t * new_instr) {
     return;
 }
 
-void print_input(task_list_t * tasks, char *c, int print_instr) {
-    //print_instr flag {0,1} per indicare se stampare le istruzioni dei tasks
-    printf("stampo lista %s\n", c); //con c indico quale lista stampo
- 
-    printf("v~~top\n");
-    task_t * t_tmp = tasks->first;
-    instruction_t * i_tmp;
-    while (NULL != t_tmp) { //ciclo che scorre i task dalla testa
-      
-+       printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n",
-            t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
-        
-        i_tmp = t_tmp->instr_list;
-
-        if (print_instr) {
-            printf("instruction top\n");
-            while(NULL != i_tmp) { //ciclo che scorre instr dalla testa
-                printf("\ttype: %u length: %u\n", i_tmp->type_flag, i_tmp->length);
-                i_tmp = i_tmp->next;
-            }
-
-            i_tmp=t_tmp->last;
-            printf("\n\ninstruction bottom\n");
-            while(NULL != i_tmp) { //ciclo che scorre instr dalla coda
-                printf("\ttype: %u length: %u\n", i_tmp->type_flag, i_tmp->length);
-                i_tmp = i_tmp->prev;
-            }
-        }
-
-        t_tmp = t_tmp->next;
-    }
-    
-    //nel percorrerla all'indietro non testiamo nuovamente le liste delle istruzioni
-    printf("\n---bottom\n");
-    t_tmp = tasks->last;
-
-    while (NULL != t_tmp) { //ciclo che scorre i task dalla coda
-        printf("task id: %u  pc: %p arrival: %u state: %u service: %u core: %d wait_time: %d\n",
-            t_tmp->id, t_tmp->pc, t_tmp->arrival_time, t_tmp->state, t_tmp->service_time, t_tmp->core, t_tmp->wait_time);
-        t_tmp = t_tmp->prev;
-    }
-    printf("\n\n");
-}
-
 bool read_input(task_list_t * tasks, char * filename) {
 
     if (freopen(filename, "r", stdin) == NULL) { //Associa il file di input con stdin

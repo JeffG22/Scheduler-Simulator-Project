@@ -153,11 +153,9 @@ void preemptive(task_list_t task_lists[], char * outputname) { //funzione chiama
         freexit(task_lists, EX_OSERR);
     }
 
-    if (&attrdefault != NULL) { //distruzione attributi thread utilizzati
-        if (pthread_attr_destroy(&attrdefault) != 0) {
-            perror("error on pthread_attr_destroy");
-            freexit(task_lists, EX_OSERR);
-        }
+    if (pthread_attr_destroy(&attrdefault) != 0) {  //distruzione attributi thread utilizzati
+        perror("error on pthread_attr_destroy");
+        freexit(task_lists, EX_OSERR);
     }
 
     if (pthread_join (core0_id, NULL) != 0) { //attesa core0

@@ -34,7 +34,6 @@ void log_output(FILE * fw_np, core_t core, long long unsigned int ck, unsigned i
 }
 
 int main(int argc, char* argv[]) {
-    
     task_list_t task_lists[N_STATES];   //Array di liste di task
     for (int i = 0; i < N_STATES; i++)  
         task_lists[i].first = task_lists[i].last = NULL;
@@ -61,11 +60,11 @@ int main(int argc, char* argv[]) {
         while ((next_option = getopt_long_only(argc, argv, short_options, long_options, NULL)) != -1) { //verifica condizione con assegnamento
             switch (next_option) {
                 case 'p':
-                    printf("OP. One day I'll now what this means: %s\n", optarg);
+                    printf("Output file for preemptive processor correctly set to: %s\n", optarg);
                     output_preemp = optarg;
                     break;
                 case 'n':
-                    printf("ON. One day I'll now what this means: %s\n", optarg);
+                    printf("Output file for not preemptive processor correctly set to: %s\n", optarg);
                     output_not_preemp = optarg; 
                     break;
                 case 'i':

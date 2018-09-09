@@ -175,6 +175,7 @@ void addInstruction(task_t * task, instruction_t * new_instr) {
     return;
 }
 
+/*
 void print_input(task_list_t * tasks, char *c, int print_instr) {
     printf("stampo lista %s\n", c);
  
@@ -217,7 +218,7 @@ void print_input(task_list_t * tasks, char *c, int print_instr) {
     }
     printf("\n\n");
 }
-
+*/
 bool read_input(task_list_t * tasks, char * filename) {
 
     if (freopen(filename, "r", stdin) == NULL) { //Associa il file di input con stdin

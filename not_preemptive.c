@@ -74,24 +74,6 @@ void * run_not_preemp(void * args) {
             run_task->pc = run_task->pc->next;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    pthread_mutex_lock(&mutex);
-
-    printf("%p\n", task_lists);
-||||||| merged common ancestors
-    printf("%p\n", task_lists);
-=======
-||||||| merged common ancestors
-<<<<<<<<< Temporary merge branch 1
-    pthread_mutex_lock(&mutex);
-
-    printf("%p\n", task_lists);
-||||||||| merged common ancestors
-    printf("%p\n", task_lists);
-=========
-=======
->>>>>>> 6b5b20f05166937d8fc289b9363af9c2cae6d5e1
         pthread_mutex_lock(&mutex);
 
         if (run_task->pc == NULL) { //task concluso!
@@ -105,51 +87,11 @@ void * run_not_preemp(void * args) {
             moveTask(task_list, RUNNING, BLOCKED, run_task);
             log_output(fw_np, core, ck, run_task->id, "blocked");
         }
-<<<<<<< HEAD
->>>>>>> firstbranch
 
-<<<<<<< HEAD
-    task_t ** blocked_task = &task_lists[NEW].first;
-    printf("%p, %p\n", blocked_task, *blocked_task);
-    printf("Should be: %p\n", task_lists[NEW].first);
-    task_lists[NEW].first = task_lists[NEW].last;
-    printf("%p, %p\n", blocked_task, *blocked_task);
-    printf("Should be: %p\n\n", task_lists[NEW].first);
-
-    pthread_mutex_unlock(&mutex);
-||||||| merged common ancestors
->>>>>>>>> Temporary merge branch 2
-
-<<<<<<<<< Temporary merge branch 1
-    task_t ** blocked_task = &task_lists[NEW].first;
-    printf("%p, %p\n", blocked_task, *blocked_task);
-    printf("Should be: %p\n", task_lists[NEW].first);
-    task_lists[NEW].first = task_lists[NEW].last;
-    printf("%p, %p\n", blocked_task, *blocked_task);
-    printf("Should be: %p\n\n", task_lists[NEW].first);
-
-    pthread_mutex_unlock(&mutex);
-=======
->>>>>>> 6b5b20f05166937d8fc289b9363af9c2cae6d5e1
-
-<<<<<<< HEAD
-||||||| merged common ancestors
-=======
-||||||| merged common ancestors
-||||||||| merged common ancestors
-=========
-=======
->>>>>>> 6b5b20f05166937d8fc289b9363af9c2cae6d5e1
         pthread_mutex_unlock(&mutex);
     }
     
     fprintf(stderr, "Error on thread execution");
-<<<<<<< HEAD
->>>>>>> firstbranch
-||||||| merged common ancestors
->>>>>>>>> Temporary merge branch 2
-=======
->>>>>>> 6b5b20f05166937d8fc289b9363af9c2cae6d5e1
     return NULL;
 }
 

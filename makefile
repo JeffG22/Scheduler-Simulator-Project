@@ -1,6 +1,5 @@
-#NOT WORKING!!! COMPILE MANUALLY!!!
-
-CFLAGS=-Wall -ggdb3 -pedantic
+#CFLAGS=-Wall -ggdb3 -pedantic
+CFLAGS=-o3
 CC=gcc
 LIBS=-pthread
 

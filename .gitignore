@@ -28,6 +28,18 @@
 *.x86_64
 *.hex
 
+#IdeFolder
+*.sqlite
+*.json
+clion*.txt
+*.cmake
+*.cbp
+*.xml
+*.iml
+cmake.check_cache
+feature_tests.c
+CMakeCache.txt
+
 # Debug files
 *.dSYM/
 *.su

@@ -36,6 +36,9 @@ clion*.txt
 *.cbp
 *.xml
 *.iml
+*.csv
+*.zip
+*.txt
 cmake.check_cache
 feature_tests.c
 CMakeCache.txt

@@ -2,9 +2,13 @@
 
 A project for the exam of Operating Systems.
 
-* Algoritmo not preemptive: SPN
-* Algoritmo preemptive: SRT
+* Not preemptive algorithm: SPN
+* Preemptive algorithm: SRT
 
-I file eseguibili li mettiamo con estensione .out
+Files:
+* main
+* listmaker
+* preemptive
+* not_preemptive
 
 ## TO-DO
